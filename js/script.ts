@@ -23,7 +23,7 @@ function createButton(): void {
 //sobald die Seit geladen hat, erscheinen die 3 Buttons mit den verschiednen Spielstärken
 window.addEventListener("load", function(): void {     
     createButton();
-    console.log("so viele buttons wurden hinzugeügt " + buttons.length);
+    console.log("so viele buttons wurden hinzugefügt " + buttons.length);
 });
 
 let score: number = 0;
@@ -35,20 +35,23 @@ interface Card {
 }
 
 let cards: Card [] = [];
-
+console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
 
 function EASY(): void {
     let card1: HTMLDivElement = document.createElement("div");
     card1.className = "cardbackground";
+    let card2: HTMLDivElement = document.createElement("div");
 
-    document.querySelector("#memoryboard").appendChild(card1);
+    document.getElementById("#memoryBoard").appendChild(card1);
+    document.getElementById("#memoryBoard").appendChild(card2);
+    //pushe karten in den array cards
     cards.push({
         cardstext: "DOM-Manipilation bezeichnet...",
-        cardflipped: true
+        cardflipped: false
     },
                {
         cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-        cardflipped: true
+        cardflipped: false
     }
     );
 
@@ -59,7 +62,8 @@ window.addEventListener("load", function(): void {
     document.querySelector(".button1").addEventListener("click", function(): void {
         EASY();
         console.log(cards.length);
-        buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugten Buttons verschwinden wieder
+        buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
+        console.log("die Buttons sind jetzt wieder verschwunden -> " + buttons.length);
     }); 
 
 });

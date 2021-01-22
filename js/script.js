@@ -18,27 +18,32 @@ function createButton() {
 //sobald die Seit geladen hat, erscheinen die 3 Buttons mit den verschiednen Spielstärken
 window.addEventListener("load", function () {
     createButton();
-    console.log("so viele buttons wurden hinzugeügt " + buttons.length);
+    console.log("so viele buttons wurden hinzugefügt " + buttons.length);
 });
 var score = 0;
 var cards = [];
+console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
 function EASY() {
     var card1 = document.createElement("div");
     card1.className = "cardbackground";
-    document.querySelector("#memoryboard").appendChild(card1);
+    var card2 = document.createElement("div");
+    document.getElementById("#memoryBoard").appendChild(card1);
+    document.getElementById("#memoryBoard").appendChild(card2);
+    //pushe karten in den array cards
     cards.push({
         cardstext: "DOM-Manipilation bezeichnet...",
-        cardflipped: true
+        cardflipped: false
     }, {
         cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-        cardflipped: true
+        cardflipped: false
     });
 }
 window.addEventListener("load", function () {
     document.querySelector(".button1").addEventListener("click", function () {
         EASY();
         console.log(cards.length);
-        buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugten Buttons verschwinden wieder
+        buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
+        console.log("die Buttons sind jetzt wieder verschwunden -> " + buttons.length);
     });
 });
 //# sourceMappingURL=script.js.map
