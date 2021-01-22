@@ -1,15 +1,15 @@
 var buttons = [];
-var buttonBox = document.getElementById("#buttonBox");
+var buttonBox = document.getElementById("buttonBox");
 //zu Beginn werden 3 buttons erzeugt, die später wieder gelöscht werden, wenn die Karten erscheinen
 function createButton() {
     var button1 = document.createElement("div");
-    button1.className = "button1";
+    button1.id = "button1";
     button1.innerHTML = "EASY";
     var button2 = document.createElement("div");
-    button2.className = "button2";
+    button2.id = "button2";
     button2.innerHTML = "AVERAGE";
     var button3 = document.createElement("div");
-    button3.className = "button3";
+    button3.id = "button3";
     button3.innerHTML = "HARD";
     document.querySelector("#buttonBox").appendChild(button1);
     document.querySelector("#buttonBox").appendChild(button2);
@@ -44,7 +44,7 @@ var button1 = document.querySelector(".button1");
 var button2 = document.querySelector(".button1");
 var button3 = document.querySelector(".button1");
 window.addEventListener("load", function () {
-    document.querySelector(".button1").addEventListener("click", function () {
+    document.getElementById("button1").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
         EASY();
         console.log(cards.length);

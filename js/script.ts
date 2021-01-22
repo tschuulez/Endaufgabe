@@ -1,17 +1,19 @@
-
 let buttons: HTMLDivElement[] = [];
-let buttonBox: HTMLElement = document.getElementById("#buttonBox");
+
+let buttonBox: HTMLElement = document.getElementById("buttonBox");
 //zu Beginn werden 3 buttons erzeugt, die später wieder gelöscht werden, wenn die Karten erscheinen
 function createButton(): void {
     
     let button1: HTMLDivElement = document.createElement("div");
-    button1.className = "button1";
+    button1.id = "button1";
     button1.innerHTML = "EASY";
+
     let button2: HTMLDivElement = document.createElement("div");
-    button2.className = "button2";
+    button2.id = "button2";
     button2.innerHTML = "AVERAGE";
+
     let button3: HTMLDivElement = document.createElement("div");
-    button3.className = "button3"; 
+    button3.id = "button3"; 
     button3.innerHTML = "HARD";
 
     document.querySelector("#buttonBox").appendChild(button1);
@@ -21,6 +23,7 @@ function createButton(): void {
     buttons.push(button1, button2, button3);
 
 }
+
 //sobald die Seit geladen hat, erscheinen die 3 Buttons mit den verschiednen Spielstärken
 window.addEventListener("load", function(): void {     
     createButton();
@@ -64,8 +67,8 @@ let button2: HTMLDivElement = document.querySelector(".button1");
 let button3: HTMLDivElement = document.querySelector(".button1");
 
 
-window.addEventListener("load", function(): void{
-    document.querySelector(".button1").addEventListener("click", function(): void {
+window.addEventListener("load", function(): void {
+document.getElementById("button1").addEventListener("click", function(): void {
         buttonBox.style.visibility = "hidden";
         EASY();
         console.log(cards.length);
