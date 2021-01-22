@@ -1,12 +1,37 @@
 body {
     background-color: black;
+    font-family: 'Courier New', Courier, monospace;
 }
-#memoryboard1 {
+h1{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    color: #FFFF;
+    text-align: center;
+}
+h3{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    color: #FFFF;
+    text-align: center; 
+}
+footer{
+    position: absolute;
+    width: 400px;
+    height: 40px;
+    left: 37%;
+    bottom: 3%;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    color: white ;
+    font: 20px ;
+    
+}
+#memoryBoard{
     position: absolute;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 900px;
-    height: 400px;
+    width: 1280px;
+    height: 800px;
     left: 50%;
     top: 50%;
     display: flex;
@@ -14,7 +39,80 @@ body {
     justify-content: center;
     transform: translate(-50%, -50%);
 }
-#memoryboard1 > div {
+.button2:hover{
+    background-color: magenta;
+}
+.button1:hover{
+    background-color: magenta;
+}
+.button3:hover{
+    background-color: magenta;
+}
+#buttonBox{
+    position: absolute;
+    padding-left: 19Opx;
+    left: 30%;
+    top: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 600px;
+    height: 100px;
+
+}
+
+.button1{
+    position: relative;
+    background-color: white;
+    align-items: center;
+    margin: 5px;
+    width: 180px;
+    height: 60px;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+   text-align: center;
+   padding-top: 35px;
+   font-size: 20px;
+   font-weight: bold;
+   color: black;
+   cursor: pointer;
+    
+}
+.button2{
+    position: relative;
+    background-color: white;
+    
+    margin: 5px;
+    width: 180px;
+    height: 60px;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+   padding-top: 35px;
+   font-size: 20px;
+   font-weight: bold;
+   color: black;
+   cursor: pointer;
+}
+.button3{
+    position: relative;
+    background-color: white;
+    align-items: center;
+    margin: 5px;
+    width: 180px;
+    height: 60px;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+   padding-top: 35px;
+   font-size: 20px;
+   font-weight: bold;
+   
+   cursor: pointer;
+
+}
+
+.cardbackground {
     background-image: url(../assets/backgroundCard2.png);
     float: left;
     text-align: center;
@@ -24,54 +122,15 @@ body {
     border-radius: 6px;
     box-shadow:         0px 5px 5px 0px #FFFF;
 }
-#memoryboard2 {
-    position: absolute;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 1400px;
-    height: 200px;
-    left: 50%;
-    top: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translate(-50%, -50%);
-}
-#memoryboard2 > div {
-    background-image: url(../assets/backgroundCard2.png);
+.cards{
     float: left;
+    background-color: #808080;
     text-align: center;
-    height: 200px;
-    width: 180px;
+    height: 250px;
+    width: 200px;
     margin: 6px;
-    border-radius: 5px;
+    border-radius: 6px;
     box-shadow:         0px 5px 5px 0px #FFFF;
-}
-#memoryboard3 {
-    position: absolute;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 1400px;
-    height: 800px;
-    left: 50%;
-    top: 60%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translate(-50%, -50%);
-    
-}
-#memoryboard3 > div {
-    background-image: url(../assets/backgroundCard2.png);
-    float: left;
-    text-align: center;
-    height: 200px;
-    width: 180px;
-    margin: 6px;
-    border-radius: 5px;
-    box-shadow:         0px 5px 5px 0px #FFFF;
-}
-img {
-    border-radius: 5px;
 
 }
+
