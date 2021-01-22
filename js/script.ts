@@ -1,5 +1,6 @@
 
 let buttons: HTMLDivElement[] = [];
+let buttonBox: HTMLElement = document.getElementById("#buttonBox");
 //zu Beginn werden 3 buttons erzeugt, die später wieder gelöscht werden, wenn die Karten erscheinen
 function createButton(): void {
     
@@ -28,6 +29,7 @@ window.addEventListener("load", function(): void {
 
 let score: number = 0;
 
+//Interface für meine Karten-Objekte
 interface Card {
     cardstext: string;
     cardflipped: boolean;
@@ -41,25 +43,30 @@ function EASY(): void {
     let card1: HTMLDivElement = document.createElement("div");
     card1.className = "cardbackground";
     let card2: HTMLDivElement = document.createElement("div");
+    card2.className = "cardbackground";
 
     document.getElementById("#memoryBoard").appendChild(card1);
     document.getElementById("#memoryBoard").appendChild(card2);
     //pushe karten in den array cards
     cards.push({
-        cardstext: "DOM-Manipilation bezeichnet...",
+       cardstext: "DOM-Manipilation bezeichnet...",
         cardflipped: false
     },
                {
-        cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-        cardflipped: false
-    }
+       cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
+       cardflipped: false
+   }
     );
-
-
 }
 
-window.addEventListener("load", function(): void {
+let button1: HTMLDivElement = document.querySelector(".button1");
+let button2: HTMLDivElement = document.querySelector(".button1");
+let button3: HTMLDivElement = document.querySelector(".button1");
+
+
+window.addEventListener("load", function(): void{
     document.querySelector(".button1").addEventListener("click", function(): void {
+        buttonBox.style.visibility = "hidden";
         EASY();
         console.log(cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
@@ -67,4 +74,6 @@ window.addEventListener("load", function(): void {
     }); 
 
 });
-                     
+
+
+                    

@@ -1,4 +1,5 @@
 var buttons = [];
+var buttonBox = document.getElementById("#buttonBox");
 //zu Beginn werden 3 buttons erzeugt, die später wieder gelöscht werden, wenn die Karten erscheinen
 function createButton() {
     var button1 = document.createElement("div");
@@ -27,6 +28,7 @@ function EASY() {
     var card1 = document.createElement("div");
     card1.className = "cardbackground";
     var card2 = document.createElement("div");
+    card2.className = "cardbackground";
     document.getElementById("#memoryBoard").appendChild(card1);
     document.getElementById("#memoryBoard").appendChild(card2);
     //pushe karten in den array cards
@@ -38,8 +40,12 @@ function EASY() {
         cardflipped: false
     });
 }
+var button1 = document.querySelector(".button1");
+var button2 = document.querySelector(".button1");
+var button3 = document.querySelector(".button1");
 window.addEventListener("load", function () {
     document.querySelector(".button1").addEventListener("click", function () {
+        buttonBox.style.visibility = "hidden";
         EASY();
         console.log(cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
