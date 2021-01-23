@@ -24,26 +24,44 @@ window.addEventListener("load", function () {
 var score = 0;
 var cards = [];
 console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
-function EASY() {
-    var card1 = document.createElement("div");
-    card1.className = "cardbackground";
-    var card2 = document.createElement("div");
-    card2.className = "cardbackground";
-    document.getElementById("#memoryBoard").appendChild(card1);
-    document.getElementById("#memoryBoard").appendChild(card2);
-    //pushe karten in den array cards
-    cards.push({
-        cardstext: "DOM-Manipilation bezeichnet...",
-        cardflipped: false
-    }, {
-        cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-        cardflipped: false
-    });
-}
-var button1 = document.querySelector(".button1");
-var button2 = document.querySelector(".button1");
-var button3 = document.querySelector(".button1");
 window.addEventListener("load", function () {
+    function EASY() {
+        var memoryBoard = document.createElement("div");
+        memoryBoard.id = "memoryBoard1";
+        var card1 = document.createElement("div");
+        card1.className = "cardbackground";
+        var card2 = document.createElement("div");
+        card2.className = "cardbackground";
+        var card3 = document.createElement("div");
+        card3.className = "cardbackground";
+        var card4 = document.createElement("div");
+        card4.className = "cardbackground";
+        var card5 = document.createElement("div");
+        card5.className = "cardbackground";
+        var card6 = document.createElement("div");
+        card6.className = "cardbackground";
+        var card7 = document.createElement("div");
+        card7.className = "cardbackground";
+        var card8 = document.createElement("div");
+        card8.className = "cardbackground";
+        document.querySelector(".box").appendChild(memoryBoard);
+        document.querySelector("#memoryBoard1").appendChild(card1);
+        document.querySelector("#memoryBoard1").appendChild(card2);
+        document.querySelector("#memoryBoard1").appendChild(card3);
+        document.querySelector("#memoryBoard1").appendChild(card4);
+        document.querySelector("#memoryBoard1").appendChild(card5);
+        document.querySelector("#memoryBoard1").appendChild(card6);
+        document.querySelector("#memoryBoard1").appendChild(card7);
+        document.querySelector("#memoryBoard1").appendChild(card8);
+        //pushe karten in den array cards
+        cards.push({
+            cardstext: "DOM-Manipilation bezeichnet...",
+            cardflipped: false
+        }, {
+            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
+            cardflipped: false
+        });
+    }
     document.getElementById("button1").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
         EASY();
@@ -52,4 +70,7 @@ window.addEventListener("load", function () {
         console.log("die Buttons sind jetzt wieder verschwunden -> " + buttons.length);
     });
 });
+var button1 = document.querySelector(".button1");
+var button2 = document.querySelector(".button1");
+var button3 = document.querySelector(".button1");
 //# sourceMappingURL=script.js.map

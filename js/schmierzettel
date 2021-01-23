@@ -12,3 +12,28 @@
     justify-content: center;
     transform: translate(-50%, -50%);
 }
+
+window.addEventListener("load", function(): void {
+document.getElementById("button1").addEventListener("click", function(): void {
+        buttonBox.style.visibility = "hidden";
+        EASY();
+        console.log(cards.length);
+        buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
+        console.log("die Buttons sind jetzt wieder verschwunden -> " + buttons.length);
+    }); 
+
+});
+
+#memoryBoard1{
+    position: absolute;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 1280px;
+    height: 800px;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+}
