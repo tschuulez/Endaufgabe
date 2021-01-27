@@ -11,6 +11,22 @@
     color:  #ff00ff;
     text-shadow: 1px 3px 5px #FFFF;
 }
+.turtle{
+    
+    font-size: 50px;
+    height: 80px;
+    width: 80px;
+    color: orange;
+    z-index: 0;
+}
+.fa-whale{
+    font-size: 50px;
+    height: 80px;
+    width: 80px;
+    color: blue;
+    
+
+}
 #buttonBox{
     position: absolute;
     padding-left: 19Opx;
@@ -90,25 +106,52 @@
 
 
 .cardbackground {
-    background-image: url(../assets/backgroundCard2.png);
-    float: left;
-    text-align: center;
-    height: 200px;
-    width: 180px;
-    margin: 6px;
-    border-radius: 6px;
-    box-shadow:         0px 5px 5px 0px #FFFF;
-}
-.cards{
-    float: left;
-    background-color: #808080;
-    text-align: center;
-    height: 200px;
-    width: 180px;
-    margin: 6px;
-    border-radius: 6px;
-    box-shadow:         0px 5px 5px 0px #FFFF;
+    position: absolute;
+    align-self: center;
 
+    float: left;
+   
+    margin: 0px;
+    border-radius: 6px;
+    box-shadow:         0px 5px 5px 0px #FFFF;
+    
+    
+}
+.cardforeground {
+    position: relative;
+    background-color: #FFFF;
+    float: left;
+    align-self: center;
+    text-align: center;
+    height: 140px;
+    width: 120px;
+    margin: 6px;
+    border-radius: 6px;
+    box-shadow:         0px 5px 5px 0px #FFFF;
+    
+}
+.cardsEASY{
+    float: left;
+    background-color: #FFFF;
+    text-align: center;
+    height: 200px;
+    width: 180px;
+    align-self: center;
+    margin: 6px;
+    border-radius: 6px;
+    box-shadow:         0px 5px 5px 0px #FFFF;
+    
+
+}
+.cardbackgroundEASY {
+    position: relative;
+    
+    float: left;
+    text-align: center;
+    
+    margin: 6px;
+    border-radius: 6px;
+    box-shadow:         0px 5px 5px 0px #FFFF;
 }
 
 body {
@@ -157,7 +200,7 @@ footer{
     position: absolute;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 1400px;
+    width: 600px;
     height: 200px;
     left: 50%;
     top: 30%;
@@ -170,12 +213,31 @@ footer{
     position: absolute;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 1400px;
-    height: 800px;
+    width: 1100px;
+    height: 400px;
     left: 50%;
-    top: 60%;
+    top: 43%;
     display: flex;
     align-items: center;
     justify-content: center;
     transform: translate(-50%, -50%);
 }
+
+.picto{
+    position: relative;
+    top: 13%;
+    height: 100px;
+    width: 100px;
+    text-decoration: none;
+}
+
+
+.texto{
+    position: relative;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    align-self: center;
+    top: 15%;
+}
+

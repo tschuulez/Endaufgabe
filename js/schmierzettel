@@ -24,16 +24,169 @@ document.getElementById("button1").addEventListener("click", function(): void {
 
 });
 
-#memoryBoard1{
-    position: absolute;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 1280px;
-    height: 800px;
-    left: 50%;
-    top: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translate(-50%, -50%);
-}
+
+
+ let cards: Card [] = [
+    {
+        text: ""
+        color:
+        pic: 
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    },
+    {
+        text: 
+        color:
+        pic:   
+    }
+
+
+];

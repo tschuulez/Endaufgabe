@@ -1,3 +1,4 @@
+//ERSTMAL HIER DER AUFBAU DES SPIELFELDS 
 var buttons = [];
 var buttonBox = document.getElementById("buttonBox");
 //zu Beginn werden 3 buttons erzeugt, die später wieder gelöscht werden, wenn die Karten erscheinen
@@ -21,7 +22,6 @@ window.addEventListener("load", function () {
     createButton();
     console.log("so viele buttons wurden hinzugefügt " + buttons.length);
 });
-var score = 0;
 //Funktion um wieder auf die Startseite zu gelanden - 3 Buttons/ 3 Spielstärken erscheinden wieder 
 function playAgain() {
     location.reload();
@@ -29,164 +29,324 @@ function playAgain() {
 document.querySelector(".fa-redo").addEventListener("click", function () {
     playAgain();
 });
-var cards = [];
+var cards = [
+    {
+        text: "DOM- Manipulation bezeichnet... ",
+        color: "#3CFF00",
+        pic: "",
+        background: ""
+    },
+    {
+        text: " ... das Verändern von Inhalten zur Laufzeit des Browsers.",
+        color: "#3CFF00",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart6.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart6.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "#01FFFF",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "#01FFFF",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart4.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart4.png",
+        background: ""
+    },
+    {
+        text: "Statt viele Variablen zu benutzen... ",
+        color: "#9933FF",
+        pic: "",
+        background: ""
+    },
+    {
+        text: " ...kann ein Array dafür genutzt werden.",
+        color: "#9933FF",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "#EF00FF",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "#EF00FF",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart7.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart7.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart5.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart5.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart3.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart3.png",
+        background: ""
+    },
+    {
+        text: "LET- Variablen sind nur in dem Bereich gültig,... ",
+        color: "#FFF700",
+        pic: "",
+        background: ""
+    },
+    {
+        text: " ...in dem sie deklariert wurden.",
+        color: "#FFF700",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart8.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart8.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart2.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "",
+        pic: "assets/clipart2.png",
+        background: ""
+    },
+    {
+        text: "",
+        color: "#FF1100",
+        pic: "",
+        background: ""
+    },
+    {
+        text: "",
+        color: "#FF1100",
+        pic: "",
+        background: ""
+    }
+];
 console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
 window.addEventListener("load", function () {
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
-    function EASY() {
+    function EASY(card) {
+        //erstellen der ersten Flexbox
         var memoryBoard = document.createElement("div");
         memoryBoard.id = "memoryBoard1";
+        //Erstellen der karte
         var card1 = document.createElement("div");
-        card1.className = "cardbackground";
-        var card2 = document.createElement("div");
-        card2.className = "cardbackground";
-        var card3 = document.createElement("div");
-        card3.className = "cardbackground";
-        var card4 = document.createElement("div");
-        card4.className = "cardbackground";
-        var card5 = document.createElement("div");
-        card5.className = "cardbackground";
-        var card6 = document.createElement("div");
-        card6.className = "cardbackground";
-        var card7 = document.createElement("div");
-        card7.className = "cardbackground";
-        var card8 = document.createElement("div");
-        card8.className = "cardbackground";
+        card1.className = "cardsEASY";
+        //Farbe 
+        card1.style.background = card.color;
+        //erstellen des Textes
+        var texto = document.createElement("label");
+        texto.className = "texto";
+        texto.innerHTML = card.text;
+        //erstelllen der Piktogramme
+        var picto = document.createElement("img");
+        picto.className = "picto";
+        picto.src = card.pic;
+        //kinder werden an den dom angehängt
         document.querySelector(".box").appendChild(memoryBoard);
         document.querySelector("#memoryBoard1").appendChild(card1);
-        document.querySelector("#memoryBoard1").appendChild(card2);
-        document.querySelector("#memoryBoard1").appendChild(card3);
-        document.querySelector("#memoryBoard1").appendChild(card4);
-        document.querySelector("#memoryBoard1").appendChild(card5);
-        document.querySelector("#memoryBoard1").appendChild(card6);
-        document.querySelector("#memoryBoard1").appendChild(card7);
-        document.querySelector("#memoryBoard1").appendChild(card8);
-        //pushe karten in den array cards
-        cards.push({
-            cardstext: "DOM-Manipilation bezeichnet...",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        });
+        card1.appendChild(texto);
+        card1.appendChild(picto);
+    }
+    function startEASY(size) {
+        for (var i = 0; i < size; i++)
+            EASY(cards[i]);
     }
     document.getElementById("button1").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
-        EASY();
+        startEASY(8);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
         console.log("die Buttons sind jetzt wieder verschwunden -> " + buttons.length);
     });
-    //document.getElementById(".cardbackground").addEventListener("click", function(): void {
-    //});
 });
 window.addEventListener("load", function () {
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
-    function AVERAGE() {
+    function AVERAGE(card) {
+        //Erstellen der zweiten Flexbox
         var memoryBoard2 = document.createElement("div");
         memoryBoard2.id = "memoryBoard2";
-        var card1 = document.createElement("div");
-        card1.className = "cardbackground";
         var card2 = document.createElement("div");
-        card2.className = "cardbackground";
-        var card3 = document.createElement("div");
-        card3.className = "cardbackground";
-        var card4 = document.createElement("div");
-        card4.className = "cardbackground";
-        var card5 = document.createElement("div");
-        card5.className = "cardbackground";
-        var card6 = document.createElement("div");
-        card6.className = "cardbackground";
-        var card7 = document.createElement("div");
-        card7.className = "cardbackground";
-        var card8 = document.createElement("div");
-        card8.className = "cardbackground";
-        var card9 = document.createElement("div");
-        card9.className = "cardbackground";
-        var card10 = document.createElement("div");
-        card10.className = "cardbackground";
-        var card11 = document.createElement("div");
-        card11.className = "cardbackground";
-        var card12 = document.createElement("div");
-        card12.className = "cardbackground";
-        var card13 = document.createElement("div");
-        card13.className = "cardbackground";
-        var card14 = document.createElement("div");
-        card14.className = "cardbackground";
-        var card15 = document.createElement("div");
-        card15.className = "cardbackground";
-        var card16 = document.createElement("div");
-        card16.className = "cardbackground";
+        card2.className = "cardforeground";
+        //Farbe 
+        card2.style.background = card.color;
+        //erstellen des Textes
+        var texto = document.createElement("label");
+        texto.className = "texto";
+        texto.innerHTML = card.text;
+        //erstelllen der Piktogramme
+        var picto = document.createElement("img");
+        picto.className = "picto";
+        picto.src = card.pic;
         document.querySelector(".box").appendChild(memoryBoard2);
-        document.querySelector("#memoryBoard2").appendChild(card1);
         document.querySelector("#memoryBoard2").appendChild(card2);
-        document.querySelector("#memoryBoard2").appendChild(card3);
-        document.querySelector("#memoryBoard2").appendChild(card4);
-        document.querySelector("#memoryBoard2").appendChild(card5);
-        document.querySelector("#memoryBoard2").appendChild(card6);
-        document.querySelector("#memoryBoard2").appendChild(card7);
-        document.querySelector("#memoryBoard2").appendChild(card8);
-        document.querySelector("#memoryBoard2").appendChild(card9);
-        document.querySelector("#memoryBoard2").appendChild(card10);
-        document.querySelector("#memoryBoard2").appendChild(card11);
-        document.querySelector("#memoryBoard2").appendChild(card12);
-        document.querySelector("#memoryBoard2").appendChild(card13);
-        document.querySelector("#memoryBoard2").appendChild(card14);
-        document.querySelector("#memoryBoard2").appendChild(card15);
-        document.querySelector("#memoryBoard2").appendChild(card16);
-        //pushe karten in den array cards
-        cards.push({
-            cardstext: "DOM-Manipilation bezeichnet...",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        }, {
-            cardstext: "das Manipulieren von Inhalten zur Laufzeit des Browsers.",
-            cardflipped: false
-        });
+        card2.appendChild(texto);
+        card2.appendChild(picto);
+    }
+    function startAVERAGE(size) {
+        for (var i = 0; i < size; i++)
+            AVERAGE(cards[i]);
     }
     document.getElementById("button2").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
-        AVERAGE();
+        startAVERAGE(16);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
         console.log("die Buttons sind jetzt wieder verschwunden -> " + buttons.length);
     });
 });
+var card = document.querySelector("cardbackground");
+window.addEventListener("load", function () {
+    document.querySelector(".cardforeground").addEventListener("click", function () {
+        card.style.visibility = "hidden";
+    });
+});
+window.addEventListener("load", function () {
+    //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
+    //MemoryBoard/ die Flexbox 
+    function HARD(card) {
+        //Erstellen der dritten Flexbox
+        var memoryBoard3 = document.createElement("div");
+        memoryBoard3.id = "memoryBoard3";
+        var card3 = document.createElement("div");
+        card3.className = "cardforeground";
+        //Farbe 
+        card3.style.background = card.color;
+        //erstellen des Textes
+        var texto = document.createElement("label");
+        texto.className = "texto";
+        texto.innerHTML = card.text;
+        //erstelllen der Piktogramme
+        var picto = document.createElement("img");
+        picto.className = "picto";
+        picto.src = card.pic;
+        //Hier wird alles an den DOM angehängt oder direkt an die Karte angehängt wie Text, Farbe, Piktogramm
+        document.querySelector(".box").appendChild(memoryBoard3);
+        document.querySelector("#memoryBoard3").appendChild(card3);
+        card3.appendChild(texto);
+        card3.appendChild(picto);
+    }
+    //Mit der Zählervariable der forschleife und der Bedingung , wird die funktion so oft durchgeführt wie ich will. Abhängig 
+    //davon wie viele karten/divs ich erzeugen will
+    function startHARD(size) {
+        for (var i = 0; i < size; i++)
+            HARD(cards[i]);
+    }
+    // Button hard wird klickbar und beim Klicken werden die Karten etc erzeugt....
+    document.getElementById("button3").addEventListener("click", function () {
+        buttonBox.style.visibility = "hidden";
+        startHARD(32);
+        console.log("So viele Karten wurden hinzugefügt " + cards.length);
+        buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
+        console.log("die Buttons sind jetzt wieder verschwunden -> " + buttons.length);
+    });
+});
+//AB HIER KOMMEN ALLE FUNKTIONEN RUND UM DIE FUNKTION DES SPIELS
+var score = 0;
+//Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
+//umgedreht zu werden, sofern sie nicht übereinstimmen
+var selected = [];
 //# sourceMappingURL=script.js.map
