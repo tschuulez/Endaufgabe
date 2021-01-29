@@ -224,6 +224,34 @@ var cards = [
     }
 ];
 console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
+// Array cards wild durchmischeln 
+var shuffleCardsEASY = function (cards) {
+    for (var i = 8 - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
+    }
+    return cards;
+};
+var shuffleCardsAVERAGE = function (cards) {
+    for (var i = 16 - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
+    }
+    return cards;
+};
+var shuffleCardsHARD = function (cards) {
+    for (var i = cards.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
+    }
+    return cards;
+};
 window.addEventListener("load", function () {
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
@@ -233,13 +261,17 @@ window.addEventListener("load", function () {
         memoryBoard.id = "memoryBoard1";
         //Erstellen der karte
         var card1 = document.createElement("div");
-        card1.className = "cardsEASY";
+        card1.className = "cardforeground";
+        //zweite Karte, die genau über den Karten liegt und somit den Inhalt verdeckt
+        //=Rückseite der Karten
+        var background = document.createElement("div");
+        background.className = "cardbackground";
         //Farbe 
         card1.style.background = card.color;
-        //erstellen des Textes
-        var texto = document.createElement("label");
-        texto.className = "texto";
-        texto.innerHTML = card.text;
+        //erstellen keines Textes,da bei dieser Spielstärke nur Farben und Bilder zu sehen sind
+        //let texto: HTMLLabelElement = document.createElement("label");
+        //texto.className = "texto";
+        //texto.innerHTML = card.text;
         //erstelllen der Piktogramme
         var picto = document.createElement("img");
         picto.className = "picto";
@@ -247,7 +279,8 @@ window.addEventListener("load", function () {
         //kinder werden an den dom angehängt
         document.querySelector(".box").appendChild(memoryBoard);
         document.querySelector("#memoryBoard1").appendChild(card1);
-        card1.appendChild(texto);
+        document.querySelector("#memoryBoard1").appendChild(background);
+        //card1.appendChild(texto);
         card1.appendChild(picto);
     }
     function startEASY(size) {
@@ -256,6 +289,7 @@ window.addEventListener("load", function () {
     }
     document.getElementById("button1").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
+        shuffleCardsEASY(cards);
         startEASY(8);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
@@ -292,6 +326,7 @@ window.addEventListener("load", function () {
     }
     document.getElementById("button2").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
+        shuffleCardsAVERAGE(cards);
         startAVERAGE(16);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
@@ -338,6 +373,7 @@ window.addEventListener("load", function () {
     // Button hard wird klickbar und beim Klicken werden die Karten etc erzeugt....
     document.getElementById("button3").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
+        shuffleCardsHARD(cards);
         startHARD(32);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder

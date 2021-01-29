@@ -105,18 +105,7 @@
 }
 
 
-.cardbackground {
-    position: absolute;
-    align-self: center;
 
-    float: left;
-   
-    margin: 0px;
-    border-radius: 6px;
-    box-shadow:         0px 5px 5px 0px #FFFF;
-    
-    
-}
 .cardforeground {
     position: relative;
     background-color: #FFFF;
@@ -127,32 +116,9 @@
     width: 120px;
     margin: 6px;
     border-radius: 6px;
-    box-shadow:         0px 5px 5px 0px #FFFF;
-    
+    box-shadow:         0px 5px 5px 0px #FFFF;   
 }
-.cardsEASY{
-    float: left;
-    background-color: #FFFF;
-    text-align: center;
-    height: 200px;
-    width: 180px;
-    align-self: center;
-    margin: 6px;
-    border-radius: 6px;
-    box-shadow:         0px 5px 5px 0px #FFFF;
-    
 
-}
-.cardbackgroundEASY {
-    position: relative;
-    
-    float: left;
-    text-align: center;
-    
-    margin: 6px;
-    border-radius: 6px;
-    box-shadow:         0px 5px 5px 0px #FFFF;
-}
 
 body {
     background-color: black;
@@ -187,10 +153,10 @@ footer{
     position: absolute;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 900px;
-    height: 400px;
+    width: 600px;
+    height: 200px;
     left: 50%;
-    top: 48%;
+    top: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -240,4 +206,3 @@ footer{
     align-self: center;
     top: 15%;
 }
-

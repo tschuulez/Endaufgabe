@@ -54,7 +54,7 @@ interface Card {
     background: string;
 }
 
-let cards: Card [] = [
+const cards: Card [] = [
     {
         text: "DOM- Manipulation bezeichnet... ",
         color: "#3CFF00",
@@ -252,6 +252,43 @@ let cards: Card [] = [
 ];
 console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
 
+// Array cards wild durchmischeln 
+const shuffleCardsEASY = cards => {
+    for ( let i: number = 8 - 1; i > 0; i-- ) {
+        const j: number = Math.floor( Math.random () * (i + 1));
+        const temp: number = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp; 
+
+    }
+    return cards;
+};
+
+const shuffleCardsAVERAGE = cards => {
+    for ( let i: number = 16 - 1; i > 0; i-- ) {
+        const j: number = Math.floor( Math.random () * (i + 1));
+        const temp: number = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp; 
+
+    }
+    return cards;
+};
+
+const shuffleCardsHARD = cards => {
+    for ( let i: number = cards.length - 1; i > 0; i-- ) {
+        const j: number = Math.floor( Math.random () * (i + 1));
+        const temp: number = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp; 
+
+    }
+    return cards;
+};
+
+
+
+
 window.addEventListener("load", function(): void {
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
@@ -261,13 +298,18 @@ window.addEventListener("load", function(): void {
         memoryBoard.id = "memoryBoard1";
         //Erstellen der karte
         let card1: HTMLDivElement = document.createElement("div");
-        card1.className = "cardsEASY";
+        card1.className = "cardforeground";
+        //zweite Karte, die genau über den Karten liegt und somit den Inhalt verdeckt
+        //=Rückseite der Karten
+        let background: HTMLDivElement = document.createElement("div");
+        background.className = "cardbackground";
         //Farbe 
         card1.style.background = card.color;
-        //erstellen des Textes
-        let texto: HTMLLabelElement = document.createElement("label");
-        texto.className = "texto";
-        texto.innerHTML = card.text;
+        //erstellen keines Textes,da bei dieser Spielstärke nur Farben und Bilder zu sehen sind
+        //let texto: HTMLLabelElement = document.createElement("label");
+        //texto.className = "texto";
+        //texto.innerHTML = card.text;
+        
         //erstelllen der Piktogramme
         let picto: HTMLImageElement = document.createElement("img");
         picto.className = "picto";
@@ -279,7 +321,8 @@ window.addEventListener("load", function(): void {
         //kinder werden an den dom angehängt
         document.querySelector(".box").appendChild(memoryBoard);
         document.querySelector("#memoryBoard1").appendChild(card1);
-        card1.appendChild(texto);
+        document.querySelector("#memoryBoard1").appendChild(background);
+        //card1.appendChild(texto);
         card1.appendChild(picto);
         
         
@@ -294,6 +337,7 @@ window.addEventListener("load", function(): void {
     document.getElementById("button1").addEventListener("click", function(): void {
         
         buttonBox.style.visibility = "hidden";
+        shuffleCardsEASY(cards);
         startEASY(8);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
@@ -341,6 +385,7 @@ window.addEventListener("load", function(): void {
     document.getElementById("button2").addEventListener("click", function(): void {
         
         buttonBox.style.visibility = "hidden";
+        shuffleCardsAVERAGE(cards);
         startAVERAGE(16);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
@@ -399,6 +444,7 @@ window.addEventListener("load", function(): void {
     document.getElementById("button3").addEventListener("click", function(): void {
         
         buttonBox.style.visibility = "hidden";
+        shuffleCardsHARD(cards);
         startHARD(32);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
         buttons.length = 0; //Schwierigkeit-buttons verschwinden / erzeugte Buttons verschwinden wieder
