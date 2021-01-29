@@ -3,6 +3,8 @@ let buttons: HTMLDivElement[] = [];
 
 let buttonBox: HTMLElement = document.getElementById("buttonBox");
 
+
+
 //zu Beginn werden 3 buttons erzeugt, die später wieder gelöscht werden, wenn die Karten erscheinen
 function createButton(): void {
     
@@ -18,6 +20,9 @@ function createButton(): void {
     let button3: HTMLDivElement = document.createElement("div");
     button3.id = "button3"; 
     button3.innerHTML = "HARD";
+
+    
+
 
     
 
@@ -59,193 +64,193 @@ const cards: Card [] = [
         text: "DOM- Manipulation bezeichnet... ",
         color: "#3CFF00",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
-        text: " ... das Verändern von Inhalten zur Laufzeit des Browsers.",
+        text: " ...das Verändern von Inhalten zur Laufzeit des Browsers.",
         color: "#3CFF00",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart6.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart6.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "#01FFFF",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "#01FFFF",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart4.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart4.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
-        text: "Statt viele Variablen zu benutzen... ",
+        text: " Statt viele Variablen zu benutzen... ",
         color: "#9933FF",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...kann ein Array dafür genutzt werden.",
+        text: " ...kann ein Array dafür genutzt werden. ",
         color: "#9933FF",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "#EF00FF",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "#EF00FF",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
-        color: "",
+        text: " Um Objekte zu deklarieren, muss... ",
+        color: "#848181",
         pic:  "",
-        background: ""   
+        background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
-        color: "",
+        text: " ...zuerst ein Interface definiert werden!",
+        color: "#848181",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart7.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart7.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart5.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart5.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
-        color: "",
+        color: "#FA9806",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
-        color: "",
+        color: "#FA9806",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart3.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart3.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "LET- Variablen sind nur in dem Bereich gültig,... ",
         color: "#FFF700",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: " ...in dem sie deklariert wurden.",
         color: "#FFF700",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
-        color: "",
-        pic:  "assets/clipart8.png",
-        background: ""
-    },
-    {
-        text: "",
-        color: "",
-        pic:  "assets/clipart8.png",
-        background: ""
-    },
-    {
-        text: "",
-        color: "",
+        text: " Um Funktionen zu einem best. Zeitpunkt aufzurufen,... ",
+        color: "#FFCCCC",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
+    },
+    {
+        text: " ...benutzen wir Events. ",
+        color: "#FFCCCC",
+        pic:  "",
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
-        color: "",
+        color: "#2604FF",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
+    },
+    {
+        text: "",
+        color: "#2604FF",
+        pic:  "",
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart2.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "",
         pic:  "assets/clipart2.png",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "#FF1100",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     },
     {
         text: "",
         color: "#FF1100",
         pic:  "",
-        background: ""
+        background: "assets/backgroundCard2.png"
     }
 
 
@@ -311,7 +316,7 @@ window.addEventListener("load", function(): void {
         memoryBoard.id = "memoryBoard3"; 
         document.querySelector(".box").appendChild(memoryBoard);   
         }
-        //Erstellen der karte
+        //Erstellen der Karte/ des divs, dessen Klasse zuvor in css deklariert wurde
         let card1: HTMLDivElement = document.createElement("div");
         card1.className = "cardforeground";
         
@@ -325,12 +330,22 @@ window.addEventListener("load", function(): void {
         texto.innerHTML = card.text;
         card1.appendChild(texto);
         }
- 
+        
+        //nur wenn bei dem Objekt eine Bildquelle vorhanden ist, soll die Option eines Bildes erst da sein
+        //sont hat jede karte (auch wenn kein Bild vorhanden ist) einen störenden leeren Rahmen
+        if ( card.pic != "") {
         //erstelllen der Piktogramme
         let picto: HTMLImageElement = document.createElement("img");
         picto.className = "picto";
         picto.src = card.pic;
         card1.appendChild(picto);
+        }
+        //erstellen eines vierten attributs, um alle karten zu bedecken, dieses Bild wird dem div card1 angehängt im DOM
+        let background: HTMLImageElement = document.createElement("img");
+        background.id = "background";
+        background.src = card.background;
+        card1.appendChild(background);
+
        
         
        
