@@ -43,37 +43,37 @@ var cards = [
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Objekte sind komplexe Variablen- typen, die... ",
         color: "",
         pic: "assets/clipart6.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...viele Informations- einheiten versch. Datentypen speichern können. ",
         color: "",
         pic: "assets/clipart6.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Der Wert von CONST-Variablen kann nicht... ",
         color: "#01FFFF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...durch Wertzu- weisung o. Neu- deklaration verändert werden.",
         color: "#01FFFF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Ein Array kann... ",
         color: "",
         pic: "assets/clipart4.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...eine Liste von Objekten enthalten.",
         color: "",
         pic: "assets/clipart4.png",
         background: "assets/backgroundCard2.png"
@@ -81,23 +81,23 @@ var cards = [
     {
         text: " Statt viele Variablen zu benutzen... ",
         color: "#9933FF",
-        pic: "",
+        pic: "assets/clipart7.png",
         background: "assets/backgroundCard2.png"
     },
     {
         text: " ...kann ein Array dafür genutzt werden. ",
         color: "#9933FF",
-        pic: "",
+        pic: "assets/clipart7.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Um Fehler zu vermeiden... ",
         color: "#EF00FF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...ist die Entwicklung eines Konzepts sehr hilfreich. ",
         color: "#EF00FF",
         pic: "",
         background: "assets/backgroundCard2.png"
@@ -115,49 +115,49 @@ var cards = [
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Im Gegensatz zu Bedingungen... ",
         color: "",
-        pic: "assets/clipart7.png",
+        pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...können Schleifen ihren Codeblock mehrfach durchlaufen. ",
         color: "",
-        pic: "assets/clipart7.png",
+        pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Eine einfache FOR-Schleife... ",
         color: "",
         pic: "assets/clipart5.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...braucht 3 Statements, um zu funktionieren.",
         color: "",
         pic: "assets/clipart5.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Funktionen sind Anweisungs- blöcke, die... ",
         color: "#FA9806",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...bestimmte Aufgaben zu einem von uns festgelegten Zeitpunkt ausführen.",
         color: "#FA9806",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Der Browser parst... ",
         color: "",
         pic: "assets/clipart3.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...von oben nach unten. ",
         color: "",
         pic: "assets/clipart3.png",
         background: "assets/backgroundCard2.png"
@@ -187,37 +187,37 @@ var cards = [
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Um einer Variable einen Wert zu zu weisen benötigen wir...",
         color: "#2604FF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...ein '=' , einen typ- entsprechenden Wert & ein ';' . ",
         color: "#2604FF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Variablen, die LOKAL deklariert werden,... ",
         color: "",
         pic: "assets/clipart2.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...sind nur innerhalb dieser Funktion verfügbar. ",
         color: "",
         pic: "assets/clipart2.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " Variablen, die GLOBAL deklariert werden,... ",
         color: "#FF1100",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "",
+        text: " ...sind überall verfügbar. ",
         color: "#FF1100",
         pic: "",
         background: "assets/backgroundCard2.png"
@@ -289,12 +289,20 @@ window.addEventListener("load", function () {
         }
         //nur wenn bei dem Objekt eine Bildquelle vorhanden ist, soll die Option eines Bildes erst da sein
         //sont hat jede karte (auch wenn kein Bild vorhanden ist) einen störenden leeren Rahmen
-        if (card.pic != "") {
-            //erstelllen der Piktogramme
-            var picto = document.createElement("img");
-            picto.className = "picto";
-            picto.src = card.pic;
-            card1.appendChild(picto);
+        if (card.pic != "" && cardsnumber != 32) {
+            if (cardsnumber == 8) {
+                //erstelllen der Piktogramme
+                var picto = document.createElement("img");
+                picto.className = "pictoEASY";
+                picto.src = card.pic;
+                card1.appendChild(picto);
+            }
+            else {
+                var picto = document.createElement("img");
+                picto.className = "picto";
+                picto.src = card.pic;
+                card1.appendChild(picto);
+            }
         }
         //erstellen eines vierten attributs, um alle karten zu bedecken, dieses Bild wird dem div card1 angehängt im DOM
         //und in css positioniert, um alle gestylten karten zu bedecken 
