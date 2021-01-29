@@ -257,13 +257,16 @@ const cards: Card [] = [
 ];
 console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
 
-// Array cards wild durchmischeln 
+// Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
+//youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
 const shuffleCardsEASY = cards => {
     for ( let i: number = 8 - 1; i > 0; i-- ) {
-        const j: number = Math.floor( Math.random () * (i + 1));
+        const randomNumber: number = Math.floor( Math.random () * (i + 1)); //randomNumber spuckt uns eine random zahl aus unserem arrays raus
         const temp: number = cards[i];
-        cards[i] = cards[j];
-        cards[j] = temp; 
+        cards[i] = cards[randomNumber];
+        cards[randomNumber] = temp; //temp ist dafür da den ausgesuchten wert mit der randomnumber  zu swappen
+                         //i kann natürlich nicht kleiner als null sein, da es nur 8 karten hier gibt die zum shufflen da sind
+                         //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array verwendet
 
     }
     return cards;
@@ -271,10 +274,10 @@ const shuffleCardsEASY = cards => {
 
 const shuffleCardsAVERAGE = cards => {
     for ( let i: number = 16 - 1; i > 0; i-- ) {
-        const j: number = Math.floor( Math.random () * (i + 1));
+        const randomNumber: number = Math.floor( Math.random () * (i + 1));
         const temp: number = cards[i];
-        cards[i] = cards[j];
-        cards[j] = temp; 
+        cards[i] = cards[randomNumber];
+        cards[randomNumber] = temp; 
 
     }
     return cards;
@@ -282,10 +285,10 @@ const shuffleCardsAVERAGE = cards => {
 
 const shuffleCardsHARD = cards => {
     for ( let i: number = cards.length - 1; i > 0; i-- ) {
-        const j: number = Math.floor( Math.random () * (i + 1));
+        const randomNumber: number = Math.floor( Math.random () * (i + 1));
         const temp: number = cards[i];
-        cards[i] = cards[j];
-        cards[j] = temp; 
+        cards[i] = cards[randomNumber];
+        cards[randomNumber] = temp; 
 
     }
     return cards;
@@ -341,8 +344,9 @@ window.addEventListener("load", function(): void {
         card1.appendChild(picto);
         }
         //erstellen eines vierten attributs, um alle karten zu bedecken, dieses Bild wird dem div card1 angehängt im DOM
+        //und in css positioniert, um alle gestylten karten zu bedecken 
         let background: HTMLImageElement = document.createElement("img");
-        background.id = "background";
+        background.className = "background";
         background.src = card.background;
         card1.appendChild(background);
 
@@ -350,7 +354,7 @@ window.addEventListener("load", function(): void {
         
        
         
-        //kinder werden an den dom angehängt
+        //kinder werden an den dom angehängt, abhängig von der anzahl an karten und somit an die jeweilige flexbox
         if ( cardsnumber == 8) {
             document.querySelector("#memoryBoard1").appendChild(card1);
         }
@@ -402,11 +406,22 @@ window.addEventListener("load", function(): void {
         
     }); 
 
+    //Funktion um Karte aufzudecken
+    function selectCard(): void {
+        let clickedBackground: HTMLDivElement = document.querySelector(".background");
+        clickedBackground.style.visibility = "hidden";
+
+       
+
+
+    }
+
+    document.querySelector(".cardforeground").addEventListener("click", function(): void {
+        selectCard();
+    });
+
 
 });
-
-
-
 
 //AB HIER KOMMEN ALLE FUNKTIONEN RUND UM DIE FUNKTION DES SPIELS
 

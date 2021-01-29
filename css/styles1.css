@@ -130,10 +130,10 @@
     box-shadow:         0px 5px 5px 0px #FFFF;  
     
 }
-#background{
+.background{
     position: absolute;
     align-self: center;
-    top: -7%;
+    top: -6%;
     left: -5%;
     float: left;
     height: 140px;
@@ -141,7 +141,7 @@
     margin: 6px;
     border-radius: 6px;
     box-shadow: 0px 5px 5px 0px #FFFF; 
-    z-index: ;
+    
 }
 
 
