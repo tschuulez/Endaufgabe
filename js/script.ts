@@ -51,6 +51,10 @@ document.querySelector(".fa-redo").addEventListener("click", function (): void {
     playAgain();
 });
 
+let score: number = 0;
+//Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
+//umgedreht zu werden, sofern sie nicht übereinstimmen
+let selected: HTMLElement[] = []; 
 //Interface für meine Karten-Objekte
 interface Card {
     text: string;
@@ -133,7 +137,7 @@ const cards: Card[] = [
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "Um Objekte zu deklarieren, muss...",
+        text: "Um Objekte zu deklarieren, muss... ",
         color: "#848181",
         pic: "assets/clipart4.svg",
         background: "assets/backgroundCard2.png"
@@ -359,6 +363,19 @@ window.addEventListener("load", function (): void {
         background.src = card.background;
         card1.appendChild(background);
 
+        //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
+        //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
+        card1.addEventListener("click", function(): void {
+
+            //die funktion, um die karten zu flippen 
+            background.style.visibility = "hidden";
+            selected.push(card1);
+            console.log(selected.length);
+            if (selected.length == 2)
+                 setTimeout(checkForMatch(), 500);
+               
+        });
+
 
 
 
@@ -374,11 +391,16 @@ window.addEventListener("load", function (): void {
             document.querySelector("#memoryBoard3").appendChild(card1);
         }
 
-
+        
 
         return card1;
+        }
 
-    }
+
+
+        
+
+    
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
     //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
     function start(numberOfCards: number): void {
@@ -415,26 +437,8 @@ window.addEventListener("load", function (): void {
 
     });
 
-    //Funktion um Karte aufzudecken
-    function selectCard(): void {
-        let clickedBackground: HTMLDivElement = document.querySelector(".background");
-        clickedBackground.style.visibility = "hidden";
-
-
-
-
-    }
-
-    document.querySelector(".cardforeground").addEventListener("click", function (): void {
-        selectCard();
-    });
-
+   
 
 });
 
-//AB HIER KOMMEN ALLE FUNKTIONEN RUND UM DIE FUNKTION DES SPIELS
-
-let score: number = 0;
-//Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
-//umgedreht zu werden, sofern sie nicht übereinstimmen
-let selected: HTMLElement[] = [];                 
+                

@@ -29,6 +29,10 @@ function playAgain() {
 document.querySelector(".fa-redo").addEventListener("click", function () {
     playAgain();
 });
+var score = 0;
+//Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
+//umgedreht zu werden, sofern sie nicht übereinstimmen
+var selected = [];
 var cards = [
     {
         text: "DOM- Manipulation bezeichnet...",
@@ -103,7 +107,7 @@ var cards = [
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "Um Objekte zu deklarieren, muss...",
+        text: "Um Objekte zu deklarieren, muss... ",
         color: "#848181",
         pic: "assets/clipart4.svg",
         background: "assets/backgroundCard2.png"
@@ -310,6 +314,16 @@ window.addEventListener("load", function () {
         background.className = "background";
         background.src = card.background;
         card1.appendChild(background);
+        //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
+        //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
+        card1.addEventListener("click", function () {
+            //die funktion, um die karten zu flippen 
+            background.style.visibility = "hidden";
+            selected.push(card1);
+            console.log(selected.length);
+            if (selected.length == 2)
+                setTimeout(checkForMatch(), 500);
+        });
         //kinder werden an den dom angehängt, abhängig von der anzahl an karten und somit an die jeweilige flexbox
         if (cardsnumber == 8) {
             document.querySelector("#memoryBoard1").appendChild(card1);
@@ -348,18 +362,5 @@ window.addEventListener("load", function () {
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
     });
-    //Funktion um Karte aufzudecken
-    function selectCard() {
-        var clickedBackground = document.querySelector(".background");
-        clickedBackground.style.visibility = "hidden";
-    }
-    document.querySelector(".cardforeground").addEventListener("click", function () {
-        selectCard();
-    });
 });
-//AB HIER KOMMEN ALLE FUNKTIONEN RUND UM DIE FUNKTION DES SPIELS
-var score = 0;
-//Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
-//umgedreht zu werden, sofern sie nicht übereinstimmen
-var selected = [];
 //# sourceMappingURL=script.js.map
