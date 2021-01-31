@@ -61,193 +61,193 @@ interface Card {
 
 const cards: Card[] = [
     {
-        text: "DOM- Manipulation bezeichnet... ",
-        color: "#3CFF00",
-        pic: "",
+        text: "DOM- Manipulation bezeichnet...",
+        color: "#EF00FF",
+        pic: "assets/clipart9.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...das Verändern von Inhalten zur Laufzeit des Browsers.",
-        color: "#3CFF00",
-        pic: "",
+        text: "...inhaltl. Veränderungen zur Laufzeit des Browsers.",
+        color: "#EF00FF",
+        pic: "assets/clipart9.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Objekte sind komplexe Variablen- typen, die... ",
-        color: "",
-        pic: "assets/clipart6.png",
+        text: "Objekte sind Variablen- typen, die...",
+        color: "#AED1F6",
+        pic: "assets/clipart7.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...viele Informations- einheiten versch. Datentypen speichern können. ",
-        color: "",
-        pic: "assets/clipart6.png",
+        text: "...versch. Datentypen beinhalten können. ",
+        color: "#AED1F6",
+        pic: "assets/clipart7.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Der Wert von CONST-Variablen kann nicht... ",
-        color: "#01FFFF",
-        pic: "",
+        text: "Der Wert von CONST-Variablen kann nicht...",
+        color: "#FFF700",
+        pic: "assets/clipart11.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...durch Wertzu- weisung o. Neu- deklaration verändert werden.",
-        color: "#01FFFF",
-        pic: "",
+        text: "...durch Wertzuweisung verändert werden. ",
+        color: "#FFF700",
+        pic: "assets/clipart11.svg",
         background: "assets/backgroundCard2.png"
     },
     {
         text: " Ein Array kann... ",
-        color: "",
-        pic: "assets/clipart4.png",
+        color: "#C3E2C9",
+        pic: "assets/clipart8.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...eine Liste von Objekten enthalten.",
-        color: "",
-        pic: "assets/clipart4.png",
+        text: " ...eine Liste von Objekten enthalten. ",
+        color: "#C3E2C9",
+        pic: "assets/clipart8.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Statt viele Variablen zu benutzen... ",
+        text: "Statt viele Variablen zu benutzen...",
         color: "#9933FF",
-        pic: "assets/clipart7.png",
+        pic: "assets/clipart6.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...kann ein Array dafür genutzt werden. ",
+        text: "...kann man dafür 1 Array nutzen. ",
         color: "#9933FF",
-        pic: "assets/clipart7.png",
+        pic: "assets/clipart6.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Um Fehler zu vermeiden... ",
-        color: "#EF00FF",
-        pic: "",
+        text: "Um Fehler zu vermeiden...",
+        color: "#3CFF00",
+        pic: "assets/clipart10.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...ist die Entwicklung eines Konzepts sehr hilfreich. ",
-        color: "#EF00FF",
-        pic: "",
+        text: "...ist ein Konzept hilfreich.",
+        color: "#3CFF00",
+        pic: "assets/clipart10.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Um Objekte zu deklarieren, muss... ",
+        text: "Um Objekte zu deklarieren, muss...",
         color: "#848181",
-        pic: "",
+        pic: "assets/clipart4.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...zuerst ein Interface definiert werden!",
+        text: "...zuerst ein Interface definiert werden. ",
         color: "#848181",
-        pic: "",
+        pic: "assets/clipart4.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Im Gegensatz zu Bedingungen... ",
-        color: "",
-        pic: "",
+        text: "Schleifen können...",
+        color: "#FDFEFE",
+        pic: "assets/clipart12.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...können Schleifen ihren Codeblock mehrfach durchlaufen. ",
-        color: "",
-        pic: "",
+        text: "...ihren Codeblock mehrfach durchlaufen.",
+        color: "#FDFEFE",
+        pic: "assets/clipart12.svg",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Eine einfache FOR-Schleife... ",
-        color: "",
+        text: "Eine einfache FOR-Schleife...",
+        color: "#B7950B",
         pic: "assets/clipart5.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...braucht 3 Statements, um zu funktionieren.",
-        color: "",
+        text: "...braucht 3 Statements, um zu funktionieren.",
+        color: "#B7950B",
         pic: "assets/clipart5.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Funktionen sind Anweisungs- blöcke, die... ",
+        text: "Funktionen sind Anweisungs- blöcke, die...",
         color: "#FA9806",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...bestimmte Aufgaben zu einem von uns festgelegten Zeitpunkt ausführen.",
+        text: "...bestimmte Aufgaben zu einem von uns festgelegten Zeitpunkt ausführen.",
         color: "#FA9806",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Der Browser parst... ",
-        color: "",
+        text: "Der Browser parst...",
+        color: "#D4C3E2 ",
         pic: "assets/clipart3.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...von oben nach unten. ",
-        color: "",
+        text: "...von oben nach unten.",
+        color: "#D4C3E2 ",
         pic: "assets/clipart3.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "LET- Variablen sind nur in dem Bereich gültig,... ",
-        color: "#FFF700",
+        text: "LET- Variablen sind nur in dem Bereich gültig,...",
+        color: "#01FFFF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...in dem sie deklariert wurden.",
-        color: "#FFF700",
+        text: "...in dem sie deklariert wurden.",
+        color: "#01FFFF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Um Funktionen zu einem best. Zeitpunkt aufzurufen,... ",
+        text: "Um Funktionen zu einem best. Zeitpunkt aufzurufen,...",
         color: "#FFCCCC",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...benutzen wir Events. ",
+        text: "...benutzen wir Events.",
         color: "#FFCCCC",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Um einer Variable einen Wert zu zu weisen benötigen wir...",
+        text: "Um einer Variable einen Wert zu zu weisen benötigen wir...",
         color: "#2604FF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...ein '=' , einen typ- entsprechenden Wert & ein ';' . ",
+        text: "...ein '=' , einen typ- entsprechenden Wert & ein ';'.",
         color: "#2604FF",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Variablen, die LOKAL deklariert werden,... ",
-        color: "",
+        text: "Variablen, die LOKAL deklariert werden,...",
+        color: "#1E8449",
         pic: "assets/clipart2.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...sind nur innerhalb dieser Funktion verfügbar. ",
-        color: "",
+        text: "...sind nur innerhalb dieser Funktion verfügbar.",
+        color: "#1E8449",
         pic: "assets/clipart2.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " Variablen, die GLOBAL deklariert werden,... ",
+        text: "Variablen, die GLOBAL deklariert werden,...",
         color: "#FF1100",
         pic: "",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: " ...sind überall verfügbar. ",
+        text: "...sind überall verfügbar.",
         color: "#FF1100",
         pic: "",
         background: "assets/backgroundCard2.png"
