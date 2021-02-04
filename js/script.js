@@ -362,5 +362,8 @@ window.addEventListener("load", function () {
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
     });
+    function checkForMatch() {
+        return;
+    }
 });
 //# sourceMappingURL=script.js.map

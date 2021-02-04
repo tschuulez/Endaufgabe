@@ -366,7 +366,6 @@ window.addEventListener("load", function (): void {
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
         card1.addEventListener("click", function(): void {
-
             //die funktion, um die karten zu flippen 
             background.style.visibility = "hidden";
             selected.push(card1);
@@ -436,6 +435,11 @@ window.addEventListener("load", function (): void {
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
 
     });
+
+    function checkForMatch(): HTMLElement {
+        return 
+
+    }
 
    
 
