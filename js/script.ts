@@ -272,9 +272,10 @@ const cards: Card[] = [
 ];
 console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
 
+
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
-const shuffleCardsEASY = cards => {
+function shuffleCardsEASY(cards): void {
     for (let i: number = 8 - 1; i > 0; i--) {
         const randomNumber: number = Math.floor(Math.random() * (i + 1)); //randomNumber spuckt uns eine random zahl aus unserem arrays raus
         const temp: number = cards[i];
@@ -284,10 +285,10 @@ const shuffleCardsEASY = cards => {
         //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array verwendet
 
     }
-    return cards;
-};
 
-const shuffleCardsAVERAGE = cards => {
+}
+
+function shuffleCardsAVERAGE(cards): void {
     for (let i: number = 16 - 1; i > 0; i--) {
         const randomNumber: number = Math.floor(Math.random() * (i + 1));
         const temp: number = cards[i];
@@ -295,19 +296,19 @@ const shuffleCardsAVERAGE = cards => {
         cards[randomNumber] = temp;
 
     }
-    return cards;
-};
 
-const shuffleCardsHARD = cards => {
-    for (let i: number = cards.length - 1; i > 0; i--) {
+}
+
+function shuffleCardsHARD(cards): void {
+    for (let i: number = 32 - 1; i > 0; i--) {
         const randomNumber: number = Math.floor(Math.random() * (i + 1));
         const temp: number = cards[i];
         cards[i] = cards[randomNumber];
         cards[randomNumber] = temp;
 
     }
-    return cards;
-};
+
+}
 
 
 
@@ -324,7 +325,7 @@ window.addEventListener("load", function (): void {
     function CreateGAME(card: Card, cardsnumber: number): HTMLElement {
 
         
-        scoreDOMElement.innerHTML = "Your score: " + score;
+        scoreDOMElement.innerHTML = "Your <p> score: </p>" + score;
 
         //erstellen der Memoryboards in Abhängigkeit zur anzahl an karten, damit sie schön geordnet liegen 
         if (cardsnumber == 8) {
@@ -415,7 +416,7 @@ window.addEventListener("load", function (): void {
                      selected = [];
                      console.log(selected.length);
                      score++;
-                     scoreDOMElement.innerHTML = "Your score: " + score;
+                     scoreDOMElement.innerHTML = "Your <p> score: </p>" + score;
                      
 
                     },          1800);

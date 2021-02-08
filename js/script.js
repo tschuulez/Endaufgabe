@@ -233,7 +233,7 @@ var cards = [
 console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
-var shuffleCardsEASY = function (cards) {
+function shuffleCardsEASY(cards) {
     for (var i = 8 - 1; i > 0; i--) {
         var randomNumber = Math.floor(Math.random() * (i + 1)); //randomNumber spuckt uns eine random zahl aus unserem arrays raus
         var temp = cards[i];
@@ -242,32 +242,29 @@ var shuffleCardsEASY = function (cards) {
         //i kann natürlich nicht kleiner als null sein, da es nur 8 karten hier gibt die zum shufflen da sind
         //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array verwendet
     }
-    return cards;
-};
-var shuffleCardsAVERAGE = function (cards) {
+}
+function shuffleCardsAVERAGE(cards) {
     for (var i = 16 - 1; i > 0; i--) {
         var randomNumber = Math.floor(Math.random() * (i + 1));
         var temp = cards[i];
         cards[i] = cards[randomNumber];
         cards[randomNumber] = temp;
     }
-    return cards;
-};
-var shuffleCardsHARD = function (cards) {
-    for (var i = cards.length - 1; i > 0; i--) {
+}
+function shuffleCardsHARD(cards) {
+    for (var i = 32 - 1; i > 0; i--) {
         var randomNumber = Math.floor(Math.random() * (i + 1));
         var temp = cards[i];
         cards[i] = cards[randomNumber];
         cards[randomNumber] = temp;
     }
-    return cards;
-};
+}
 window.addEventListener("load", function () {
     scoreDOMElement = document.querySelector("h3");
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
     function CreateGAME(card, cardsnumber) {
-        scoreDOMElement.innerHTML = "Your score: " + score;
+        scoreDOMElement.innerHTML = "Your <p> score: </p>" + score;
         //erstellen der Memoryboards in Abhängigkeit zur anzahl an karten, damit sie schön geordnet liegen 
         if (cardsnumber == 8) {
             var memoryBoard = document.createElement("div");
@@ -345,7 +342,7 @@ window.addEventListener("load", function () {
                             selected = [];
                             console.log(selected.length);
                             score++;
-                            scoreDOMElement.innerHTML = "Your score: " + score;
+                            scoreDOMElement.innerHTML = "Your <p> score: </p>" + score;
                         }, 1800);
                     }
                     //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
