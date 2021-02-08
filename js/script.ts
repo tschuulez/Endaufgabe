@@ -427,12 +427,21 @@ window.addEventListener("load", function (): void {
                      //und das Array selected wird wieder geleert
                      selected[0].uncovered.style.visibility = "hidden";
                      selected[1].uncovered.style.visibility = "hidden";
-                     //cardsOnField.splice()
+                     
+                     //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
+                     //nicht mehr zufällig aussuchen kann
+                     cardsOnField.splice(cardsOnField.indexOf(selected[0]), 1);
+                     cardsOnField.splice(cardsOnField.indexOf(selected[1]), 1);
                      selected = [];
                      console.log(selected.length);
+
+                     //der score des interaktiven Nutzers wird um eine ganze Zahl erhöht
                      yourScore++;
+                     //folglich wird der DOM so manipuliert -> es folgt eine immer aktuelle Score Anzeige 
                      yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
-                     console.log(cardsOnField.length);
+                     // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
+                     console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld"); 
+                
                      
 
                     },          2200);
@@ -444,9 +453,9 @@ window.addEventListener("load", function (): void {
                         selected[0].reverse.style.visibility = "visible";
                         selected[1].reverse.style.visibility = "visible";
                     
-                        //auch hier wird der Array wieder geleert, um neue Karten auszuwählen
+                        //auch hier wird der Array wieder geleert, um neue Karten auszuwählen und das nach jedem try
                         selected = [];
-                        console.log(selected.length);
+                        console.log(" es sind wieder " + selected.length + " Karten selected");
 
 
                     },         2200);
@@ -510,6 +519,9 @@ window.addEventListener("load", function (): void {
             pickedCard2.reverse.style.visibility = "hidden";
             
         },         500);  
+       
+        //beide Karten werden in den selected Array bepusht, um mit checkForMatch verglichen werden zu können
+        //generell kommen alle ausgeählten karten in diesen Array
         selected.push(pickedCard1, pickedCard2);
 
         //console.log(selected.length);
@@ -520,13 +532,21 @@ window.addEventListener("load", function (): void {
         if (itsaMatch == true) {
             setTimeout(function(): void {
                 
-                selected[0].uncovered.style.visibility = "hidden";
-                selected[1].uncovered.style.visibility = "hidden";
+                pickedCard1.uncovered.style.visibility = "hidden";
+                pickedCard2.uncovered.style.visibility = "hidden";
+
+                //Die 2 zusammenpassenden Karten werden komplett aus dem Array gestrichen, damit sie nicht nochmal 
+                //ausgewählt werden können / die 1 bei splice sagt wie viele Elemente rausgeschnitten werden und da wir 
+                //den index von der zufälligen karte nicht kennen benutzen wir indexOf
+                cardsOnField.splice(cardsOnField.indexOf(pickedCard1), 1);
+                cardsOnField.splice(cardsOnField.indexOf(pickedCard2), 1);
                 selected = [];
-                console.log(selected.length);
+                
             
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
+                console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld"); 
+                
                },      3000);
 
                //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
