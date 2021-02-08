@@ -12,18 +12,18 @@
     text-shadow: 1px 3px 5px #FFFF;
 }
 .yourScore{
-    position: absolute;
+    position: relative;
     left: 30px;
-    top: 30%;
+    top: 60%;
     text-align: left;
     color: #FFFF;
     font-size: 30px;
     font-weight: bold;
 }
 .rivalScore{
-    position: absolute;
+    position: relative;
     right: 30px;
-    top: 30%;
+    
     text-align: right;
     
     color: #FFFF;

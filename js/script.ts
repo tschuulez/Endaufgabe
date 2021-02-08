@@ -413,7 +413,7 @@ window.addEventListener("load", function (): void {
                 uncovered: card1,
                 properties:  card
             });
-            console.log(selected.length);
+            //console.log(selected.length);
 
             //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
             if (selected.length == 2) {
@@ -427,13 +427,15 @@ window.addEventListener("load", function (): void {
                      //und das Array selected wird wieder geleert
                      selected[0].uncovered.style.visibility = "hidden";
                      selected[1].uncovered.style.visibility = "hidden";
+                     //cardsOnField.splice()
                      selected = [];
                      console.log(selected.length);
                      yourScore++;
                      yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
+                     console.log(cardsOnField.length);
                      
 
-                    },          1800);
+                    },          2200);
                     }
                 //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
                 //werden, indem wir den style wieder auf visible verändern
@@ -441,12 +443,22 @@ window.addEventListener("load", function (): void {
                     setTimeout(function(): void {
                         selected[0].reverse.style.visibility = "visible";
                         selected[1].reverse.style.visibility = "visible";
+                    
                         //auch hier wird der Array wieder geleert, um neue Karten auszuwählen
                         selected = [];
                         console.log(selected.length);
 
 
-                    },         1800);
+                    },         2200);
+
+                //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
+                    setTimeout (function(): void {
+                        rivalsTurn();
+
+                    },          3500);
+
+                    
+
             }
             }     
                 
@@ -482,7 +494,7 @@ window.addEventListener("load", function (): void {
         let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
-        while (pickedCard1 == pickedCard2) {
+        if (pickedCard1 == pickedCard2) {
             let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         }
         
@@ -492,7 +504,7 @@ window.addEventListener("load", function (): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard1.reverse.style.visibility = "hidden";
             
-        },         2000);  
+        },         1600);  
         setTimeout(function(): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard2.reverse.style.visibility = "hidden";
@@ -500,7 +512,7 @@ window.addEventListener("load", function (): void {
         },         500);  
         selected.push(pickedCard1, pickedCard2);
 
-        console.log(selected.length);
+        //console.log(selected.length);
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
         let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
         //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
@@ -515,10 +527,10 @@ window.addEventListener("load", function (): void {
             
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
-
-                
-
                },      3000);
+
+               //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
+            rivalsTurn();
         }
         if (itsaMatch == false) {
             setTimeout(function(): void {

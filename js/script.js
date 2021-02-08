@@ -341,7 +341,7 @@ window.addEventListener("load", function () {
                     uncovered: card1,
                     properties: card
                 });
-                console.log(selected.length);
+                //console.log(selected.length);
                 //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
                 if (selected.length == 2) {
                     var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
@@ -352,11 +352,13 @@ window.addEventListener("load", function () {
                             //und das Array selected wird wieder geleert
                             selected[0].uncovered.style.visibility = "hidden";
                             selected[1].uncovered.style.visibility = "hidden";
+                            //cardsOnField.splice()
                             selected = [];
                             console.log(selected.length);
                             yourScore++;
                             yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
-                        }, 1800);
+                            console.log(cardsOnField.length);
+                        }, 2200);
                     }
                     //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
                     //werden, indem wir den style wieder auf visible verändern
@@ -367,7 +369,11 @@ window.addEventListener("load", function () {
                             //auch hier wird der Array wieder geleert, um neue Karten auszuwählen
                             selected = [];
                             console.log(selected.length);
-                        }, 1800);
+                        }, 2200);
+                        //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
+                        setTimeout(function () {
+                            rivalsTurn();
+                        }, 3500);
                     }
                 }
             });
@@ -390,19 +396,19 @@ window.addEventListener("load", function () {
         var pickedCard2 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
-        while (pickedCard1 == pickedCard2) {
+        if (pickedCard1 == pickedCard2) {
             var pickedCard1_1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         }
         setTimeout(function () {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard1.reverse.style.visibility = "hidden";
-        }, 2000);
+        }, 1600);
         setTimeout(function () {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard2.reverse.style.visibility = "hidden";
         }, 500);
         selected.push(pickedCard1, pickedCard2);
-        console.log(selected.length);
+        //console.log(selected.length);
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
         var itsaMatch = checkForMatch(selected[0], selected[1]);
         //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
@@ -416,6 +422,8 @@ window.addEventListener("load", function () {
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
             }, 3000);
+            //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
+            rivalsTurn();
         }
         if (itsaMatch == false) {
             setTimeout(function () {
