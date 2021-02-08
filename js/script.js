@@ -402,8 +402,10 @@ window.addEventListener("load", function () {
         var pickedCard2 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
-        while (pickedCard1 == pickedCard2) {
-            pickedCard1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+        if (pickedCard1 == pickedCard2) {
+            do
+                pickedCard1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+            while (pickedCard1 != pickedCard2);
         }
         setTimeout(function () {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden

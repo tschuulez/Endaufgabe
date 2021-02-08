@@ -503,8 +503,11 @@ window.addEventListener("load", function (): void {
         let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
-        while (pickedCard1 == pickedCard2) {
+        if (pickedCard1 == pickedCard2) {
+            
+           do 
             pickedCard1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+            while (pickedCard1 != pickedCard2);
         }
         
         
