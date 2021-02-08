@@ -29,13 +29,17 @@ function playAgain() {
 document.querySelector(".fa-redo").addEventListener("click", function () {
     playAgain();
 });
-var score = 0;
-var scoreDOMElement;
+var yourScore = 0;
+var rivalScore = 0;
+var yourScoreDOMElement;
+var rivalScoreDOMElement;
+var cheerSound = new Audio("../assets/cheerSound.mp3");
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 var selected = [];
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 var itsaMatch;
+var cardsOnField = [];
 var cards = [
     {
         text: "DOM- Manipulation bezeichnet...",
@@ -230,7 +234,7 @@ var cards = [
         background: "assets/backgroundCard2.png"
     }
 ];
-console.log("im Moment sind so viele Karten in deinem Array " + cards.length);
+console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.length);
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
 function shuffleCardsEASY(cards) {
@@ -260,11 +264,13 @@ function shuffleCardsHARD(cards) {
     }
 }
 window.addEventListener("load", function () {
-    scoreDOMElement = document.querySelector("h3");
+    yourScoreDOMElement = document.querySelector(".yourScore");
+    rivalScoreDOMElement = document.querySelector(".rivalScore");
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
     function CreateGAME(card, cardsnumber) {
-        scoreDOMElement.innerHTML = "Your <p> score: </p>" + score;
+        yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
+        rivalScoreDOMElement.innerHTML = "Your <p> score: </p>" + rivalScore;
         //erstellen der Memoryboards in Abhängigkeit zur anzahl an karten, damit sie schön geordnet liegen 
         if (cardsnumber == 8) {
             var memoryBoard = document.createElement("div");
@@ -317,7 +323,14 @@ window.addEventListener("load", function () {
         background.className = "background";
         background.src = card.background;
         card1.appendChild(background);
-        if (selected.length == 0 || selected.length == 1) {
+        //Je nach Spielstärke werden so und so viele Karten in das Array cardsOnField gepusht
+        //So kann der computer randomly davon 2 karten aufdecken, die auch wirklich auf dem Spielfeld sind
+        cardsOnField.push({
+            reverse: background,
+            uncovered: card1,
+            properties: card
+        });
+        if (selected.length != 2) {
             //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
             //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
             card1.addEventListener("click", function () {
@@ -341,8 +354,8 @@ window.addEventListener("load", function () {
                             selected[1].uncovered.style.visibility = "hidden";
                             selected = [];
                             console.log(selected.length);
-                            score++;
-                            scoreDOMElement.innerHTML = "Your <p> score: </p>" + score;
+                            yourScore++;
+                            yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
                         }, 1800);
                     }
                     //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
@@ -371,6 +384,49 @@ window.addEventListener("load", function () {
         }
         return card1;
     }
+    function rivalsTurn() {
+        //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
+        var pickedCard1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+        var pickedCard2 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+        //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
+        //nicht mehr um dieselbe Karte handelt
+        while (pickedCard1 == pickedCard2) {
+            var pickedCard1_1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+        }
+        //die auserwählten karten werden in dern array selected gepusht 
+        selected.push(pickedCard1);
+        selected.push(pickedCard2);
+        setTimeout(function () {
+            //es sollen nicht beide karten gleichzeitig aufgedeckt werden
+            pickedCard1.reverse.style.visibility = "hidden";
+        }, 2000);
+        setTimeout(function () {
+            //es sollen nicht beide karten gleichzeitig aufgedeckt werden
+            pickedCard2.reverse.style.visibility = "hidden";
+        }, 500);
+        //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
+        var itsaMatch = checkForMatch(pickedCard1, pickedCard2);
+        //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
+        //und die Karten verschwinden oder werden erneut zugedeckt
+        if (itsaMatch == true) {
+            setTimeout(function () {
+                pickedCard1.uncovered.style.visibility = "hidden";
+                pickedCard2.uncovered.style.visibility = "hidden";
+                selected = [];
+                console.log(selected.length);
+                rivalScore++;
+                rivalScoreDOMElement.innerHTML = "Your <p> score: </p>" + rivalScore;
+            }, 1800);
+        }
+        if (itsaMatch == false) {
+            setTimeout(function () {
+                pickedCard1.reverse.style.visibility = "visible";
+                pickedCard2.reverse.style.visibility = "visible";
+                selected = [];
+                console.log(selected.length);
+            }, 1800);
+        }
+    }
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
     //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
     function start(numberOfCards) {
@@ -383,19 +439,22 @@ window.addEventListener("load", function () {
         buttonBox.style.visibility = "hidden";
         shuffleCardsEASY(cards);
         start(8);
-        console.log("So viele Karten wurden hinzugefügt " + cards.length);
+        console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
+        rivalsTurn();
     });
     document.getElementById("button2").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
         shuffleCardsAVERAGE(cards);
         start(16);
-        console.log("So viele Karten wurden hinzugefügt " + cards.length);
+        console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
+        rivalsTurn();
     });
     document.getElementById("button3").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
         shuffleCardsHARD(cards);
         start(32);
-        console.log("So viele Karten wurden hinzugefügt " + cards.length);
+        console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
+        rivalsTurn();
     });
     function checkForMatch(firstCard, secondCard) {
         //die erste Karte entspricht der ersten Stelle im Array selected
