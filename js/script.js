@@ -33,6 +33,8 @@ var score = 0;
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 var selected = [];
+//boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
+var itsaMatch;
 var cards = [
     {
         text: "DOM- Manipulation bezeichnet...",
@@ -319,10 +321,39 @@ window.addEventListener("load", function () {
         card1.addEventListener("click", function () {
             //die funktion, um die karten zu flippen 
             background.style.visibility = "hidden";
-            selected.push(card1);
+            selected.push({
+                reverse: background,
+                uncovered: card1,
+                properties: card
+            });
             console.log(selected.length);
-            if (selected.length == 2)
-                setTimeout(checkForMatch(), 500);
+            //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
+            if (selected.length == 2) {
+                var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
+                if (itsaMatch_1 == true) {
+                    //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
+                    setTimeout(function () {
+                        //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
+                        //und das Array selected wird wieder geleert
+                        selected[0].uncovered.style.visibility = "hidden";
+                        selected[1].uncovered.style.visibility = "hidden";
+                        selected = [];
+                        console.log(selected.length);
+                        score++;
+                    }, 1800);
+                }
+                //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
+                //werden, indem wir den style wieder auf visible verändern
+                if (itsaMatch_1 == false) {
+                    setTimeout(function () {
+                        selected[0].reverse.style.visibility = "visible";
+                        selected[1].reverse.style.visibility = "visible";
+                        //auch hier wird der Array wieder geleert, um neue Karten auszuwählen
+                        selected = [];
+                        console.log(selected.length);
+                    }, 1800);
+                }
+            }
         });
         //kinder werden an den dom angehängt, abhängig von der anzahl an karten und somit an die jeweilige flexbox
         if (cardsnumber == 8) {
@@ -362,8 +393,12 @@ window.addEventListener("load", function () {
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cards.length);
     });
-    function checkForMatch() {
-        return;
+    function checkForMatch(firstCard, secondCard) {
+        //die erste Karte entspricht der ersten Stelle im Array selected
+        firstCard = selected[0];
+        secondCard = selected[1];
+        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
+        return firstCard.properties.color === secondCard.properties.color;
     }
 });
 //# sourceMappingURL=script.js.map

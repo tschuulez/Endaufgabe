@@ -54,13 +54,22 @@ document.querySelector(".fa-redo").addEventListener("click", function (): void {
 let score: number = 0;
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
-let selected: HTMLElement[] = []; 
+let selected: SelectedCard [] = []; 
+
+ //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
+let itsaMatch: boolean; 
+
 //Interface für meine Karten-Objekte
 interface Card {
     text: string;
     color: string;
     pic: string;
     background: string;
+}
+interface SelectedCard {
+    reverse: HTMLImageElement;
+    uncovered: HTMLElement;
+    properties: Card;
 }
 
 const cards: Card[] = [
@@ -302,6 +311,9 @@ const shuffleCardsHARD = cards => {
 
 
 window.addEventListener("load", function (): void {
+
+
+   
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
     function CreateGAME(card: Card, cardsnumber: number): HTMLElement {
@@ -363,15 +375,53 @@ window.addEventListener("load", function (): void {
         background.src = card.background;
         card1.appendChild(background);
 
+        
+
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
         card1.addEventListener("click", function(): void {
             //die funktion, um die karten zu flippen 
             background.style.visibility = "hidden";
-            selected.push(card1);
+            selected.push({
+                reverse: background,
+                uncovered: card1,
+                properties:  card
+            });
             console.log(selected.length);
-            if (selected.length == 2)
-                 setTimeout(checkForMatch(), 500);
+            //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
+            if (selected.length == 2) {
+
+            let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
+ 
+            if (itsaMatch == true) {
+                     //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
+                     setTimeout(function(): void {
+                     //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
+                     //und das Array selected wird wieder geleert
+                     selected[0].uncovered.style.visibility = "hidden";
+                     selected[1].uncovered.style.visibility = "hidden";
+                     selected = [];
+                     console.log(selected.length);
+                     score++;
+
+                    },          1800);
+                    }
+                //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
+                //werden, indem wir den style wieder auf visible verändern
+            if (itsaMatch == false) {
+                    setTimeout(function(): void {
+                        selected[0].reverse.style.visibility = "visible";
+                        selected[1].reverse.style.visibility = "visible";
+                        //auch hier wird der Array wieder geleert, um neue Karten auszuwählen
+                        selected = [];
+                        console.log(selected.length);
+
+
+                    },         1800);
+            }
+            }     
+                
+                  
                
         });
 
@@ -436,10 +486,17 @@ window.addEventListener("load", function (): void {
 
     });
 
-    function checkForMatch(): HTMLElement {
-        return 
-
+    function checkForMatch( firstCard: SelectedCard, secondCard: SelectedCard): boolean {
+        //die erste Karte entspricht der ersten Stelle im Array selected
+        firstCard = selected[0];
+        secondCard = selected[1];
+        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
+        return firstCard.properties.color === secondCard.properties.color;
+            
+        
     }
+
+   
 
    
 
