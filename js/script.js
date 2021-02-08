@@ -30,6 +30,7 @@ document.querySelector(".fa-redo").addEventListener("click", function () {
     playAgain();
 });
 var score = 0;
+var scoreDOMElement;
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 var selected = [];
@@ -262,9 +263,11 @@ var shuffleCardsHARD = function (cards) {
     return cards;
 };
 window.addEventListener("load", function () {
+    scoreDOMElement = document.querySelector("h3");
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
     function CreateGAME(card, cardsnumber) {
+        scoreDOMElement.innerHTML = "Your score: " + score;
         //erstellen der Memoryboards in Abhängigkeit zur anzahl an karten, damit sie schön geordnet liegen 
         if (cardsnumber == 8) {
             var memoryBoard = document.createElement("div");
@@ -284,7 +287,8 @@ window.addEventListener("load", function () {
         //Erstellen der Karte/ des divs, dessen Klasse zuvor in css deklariert wurde
         var card1 = document.createElement("div");
         card1.className = "cardforeground";
-        //Farbe 
+        //jedem div , jeder karte die erstellt wird, wird color, text und pic übergeben 
+        //Dem divElement wird die property Farbe zugewiesen  
         card1.style.background = card.color;
         if (cardsnumber == 16 || cardsnumber == 32) {
             //erstellen eines Textes nur bei 16 und 32 karten , die zwei geraden striche bedeuten "oder" = vergleichsoperator
@@ -316,45 +320,48 @@ window.addEventListener("load", function () {
         background.className = "background";
         background.src = card.background;
         card1.appendChild(background);
-        //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
-        //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
-        card1.addEventListener("click", function () {
-            //die funktion, um die karten zu flippen 
-            background.style.visibility = "hidden";
-            selected.push({
-                reverse: background,
-                uncovered: card1,
-                properties: card
+        if (selected.length == 0 || selected.length == 1) {
+            //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
+            //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
+            card1.addEventListener("click", function () {
+                //die funktion, um die karten zu flippen 
+                background.style.visibility = "hidden";
+                selected.push({
+                    reverse: background,
+                    uncovered: card1,
+                    properties: card
+                });
+                console.log(selected.length);
+                //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
+                if (selected.length == 2) {
+                    var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
+                    if (itsaMatch_1 == true) {
+                        //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
+                        setTimeout(function () {
+                            //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
+                            //und das Array selected wird wieder geleert
+                            selected[0].uncovered.style.visibility = "hidden";
+                            selected[1].uncovered.style.visibility = "hidden";
+                            selected = [];
+                            console.log(selected.length);
+                            score++;
+                            scoreDOMElement.innerHTML = "Your score: " + score;
+                        }, 1800);
+                    }
+                    //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
+                    //werden, indem wir den style wieder auf visible verändern
+                    if (itsaMatch_1 == false) {
+                        setTimeout(function () {
+                            selected[0].reverse.style.visibility = "visible";
+                            selected[1].reverse.style.visibility = "visible";
+                            //auch hier wird der Array wieder geleert, um neue Karten auszuwählen
+                            selected = [];
+                            console.log(selected.length);
+                        }, 1800);
+                    }
+                }
             });
-            console.log(selected.length);
-            //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
-            if (selected.length == 2) {
-                var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
-                if (itsaMatch_1 == true) {
-                    //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
-                    setTimeout(function () {
-                        //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
-                        //und das Array selected wird wieder geleert
-                        selected[0].uncovered.style.visibility = "hidden";
-                        selected[1].uncovered.style.visibility = "hidden";
-                        selected = [];
-                        console.log(selected.length);
-                        score++;
-                    }, 1800);
-                }
-                //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
-                //werden, indem wir den style wieder auf visible verändern
-                if (itsaMatch_1 == false) {
-                    setTimeout(function () {
-                        selected[0].reverse.style.visibility = "visible";
-                        selected[1].reverse.style.visibility = "visible";
-                        //auch hier wird der Array wieder geleert, um neue Karten auszuwählen
-                        selected = [];
-                        console.log(selected.length);
-                    }, 1800);
-                }
-            }
-        });
+        }
         //kinder werden an den dom angehängt, abhängig von der anzahl an karten und somit an die jeweilige flexbox
         if (cardsnumber == 8) {
             document.querySelector("#memoryBoard1").appendChild(card1);

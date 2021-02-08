@@ -52,6 +52,8 @@ document.querySelector(".fa-redo").addEventListener("click", function (): void {
 });
 
 let score: number = 0;
+let scoreDOMElement: HTMLElement;
+
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 let selected: SelectedCard [] = []; 
@@ -312,11 +314,18 @@ const shuffleCardsHARD = cards => {
 
 window.addEventListener("load", function (): void {
 
+    scoreDOMElement = document.querySelector("h3");
+    
+
 
    
     //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
     //MemoryBoard/ die Flexbox 
     function CreateGAME(card: Card, cardsnumber: number): HTMLElement {
+
+        
+        scoreDOMElement.innerHTML = "Your score: " + score;
+
         //erstellen der Memoryboards in Abhängigkeit zur anzahl an karten, damit sie schön geordnet liegen 
         if (cardsnumber == 8) {
             let memoryBoard: HTMLDivElement = document.createElement("div");
@@ -338,8 +347,9 @@ window.addEventListener("load", function (): void {
         //Erstellen der Karte/ des divs, dessen Klasse zuvor in css deklariert wurde
         let card1: HTMLDivElement = document.createElement("div");
         card1.className = "cardforeground";
+        //jedem div , jeder karte die erstellt wird, wird color, text und pic übergeben 
 
-        //Farbe 
+        //Dem divElement wird die property Farbe zugewiesen  
         card1.style.background = card.color;
 
         if (cardsnumber == 16 || cardsnumber == 32) {
@@ -375,8 +385,10 @@ window.addEventListener("load", function (): void {
         background.src = card.background;
         card1.appendChild(background);
 
-        
 
+
+        
+        if (selected.length == 0 || selected.length == 1) {
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
         card1.addEventListener("click", function(): void {
@@ -403,6 +415,8 @@ window.addEventListener("load", function (): void {
                      selected = [];
                      console.log(selected.length);
                      score++;
+                     scoreDOMElement.innerHTML = "Your score: " + score;
+                     
 
                     },          1800);
                     }
@@ -424,6 +438,7 @@ window.addEventListener("load", function (): void {
                   
                
         });
+        }
 
 
 
