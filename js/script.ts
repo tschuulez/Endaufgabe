@@ -329,7 +329,7 @@ window.addEventListener("load", function (): void {
 
         
         yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
-        rivalScoreDOMElement.innerHTML = "Your <p> score: </p>" + rivalScore;
+        rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
 
         //erstellen der Memoryboards in Abhängigkeit zur anzahl an karten, damit sie schön geordnet liegen 
         if (cardsnumber == 8) {
@@ -485,43 +485,49 @@ window.addEventListener("load", function (): void {
         while (pickedCard1 == pickedCard2) {
             let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         }
-        //die auserwählten karten werden in dern array selected gepusht 
-        selected.push(pickedCard1);
-        selected.push(pickedCard2);
+        
+        
 
         setTimeout(function(): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard1.reverse.style.visibility = "hidden";
+            
         },         2000);  
         setTimeout(function(): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard2.reverse.style.visibility = "hidden";
+            
         },         500);  
+        selected.push(pickedCard1, pickedCard2);
+
+        console.log(selected.length);
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
-        let itsaMatch: boolean = checkForMatch(pickedCard1, pickedCard2);
+        let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
         //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
         //und die Karten verschwinden oder werden erneut zugedeckt
         if (itsaMatch == true) {
             setTimeout(function(): void {
                 
-                pickedCard1.uncovered.style.visibility = "hidden";
-                pickedCard2.uncovered.style.visibility = "hidden";
+                selected[0].uncovered.style.visibility = "hidden";
+                selected[1].uncovered.style.visibility = "hidden";
                 selected = [];
                 console.log(selected.length);
+            
                 rivalScore++;
-                rivalScoreDOMElement.innerHTML = "Your <p> score: </p>" + rivalScore;
+                rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
+
                 
 
-               },      1800);
+               },      3000);
         }
         if (itsaMatch == false) {
             setTimeout(function(): void {
-                pickedCard1.reverse.style.visibility = "visible";
-                pickedCard2.reverse.style.visibility = "visible";
+                selected[0].reverse.style.visibility = "visible";
+                selected[1].reverse.style.visibility = "visible";
                 selected = [];
                 console.log(selected.length);
 
-            },         1800);
+            },         3000);
     }
 
 
