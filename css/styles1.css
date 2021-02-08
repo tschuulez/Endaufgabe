@@ -11,22 +11,7 @@
     color:  #ff00ff;
     text-shadow: 1px 3px 5px #FFFF;
 }
-.turtle{
-    
-    font-size: 50px;
-    height: 80px;
-    width: 80px;
-    color: orange;
-    z-index: 0;
-}
-.fa-whale{
-    font-size: 50px;
-    height: 80px;
-    width: 80px;
-    color: blue;
-    
 
-}
 #buttonBox{
     position: absolute;
     padding-left: 19Opx;
@@ -128,7 +113,8 @@
     width: 120px;
     margin: 6px;
     border-radius: 6px;
-    box-shadow:         0px 5px 5px 0px #FFFF;  
+    box-shadow:         0px 5px 5px 0px #FFFF; 
+    z-index: 4; 
     
 }
 .background{
@@ -182,39 +168,42 @@ footer{
     flex-direction: row;
     flex-wrap: wrap;
     width: 600px;
-    height: 200px;
+    height: 50px;
     left: 50%;
     top: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
     transform: translate(-50%, -50%);
+    z-index: 0;
 }
 #memoryBoard2{
     position: absolute;
     flex-direction: row;
     flex-wrap: wrap;
     width: 600px;
-    height: 200px;
+    height: 50px;
     left: 50%;
-    top: 30%;
+    top: 23%;
     display: flex;
     align-items: center;
     justify-content: center;
     transform: translate(-50%, -50%);
+    z-index: 0;
 }
 #memoryBoard3{
     position: absolute;
     flex-direction: row;
     flex-wrap: wrap;
     width: 1100px;
-    height: 400px;
+    height: 50px;
     left: 50%;
-    top: 43%;
+    top: 23%;
     display: flex;
     
     justify-content: center;
     transform: translate(-50%, -50%);
+    z-index: 0;
 }
 
 .picto{
