@@ -1,14 +1,14 @@
-//ERSTMAL HIER DER AUFBAU DES SPIELFELDS 
 var buttons = [];
 var buttonBox = document.getElementById("buttonBox");
 //zu Beginn werden 3 buttons erzeugt, die später wieder gelöscht werden, wenn die Karten erscheinen
+//die Buttons entsprechen der Auswahl der Spielstärke 
 function createButton() {
     var button1 = document.createElement("div");
     button1.id = "button1";
     button1.innerHTML = "EASY";
     var button2 = document.createElement("div");
     button2.id = "button2";
-    button2.innerHTML = "AVERAGE";
+    button2.innerHTML = "MEDIUM";
     var button3 = document.createElement("div");
     button3.id = "button3";
     button3.innerHTML = "HARD";
@@ -17,18 +17,20 @@ function createButton() {
     document.querySelector("#buttonBox").appendChild(button3);
     buttons.push(button1, button2, button3);
 }
-//sobald die Seit geladen hat, erscheinen die 3 Buttons mit den verschiednen Spielstärken
+//sobald die Seite geladen hat, erscheinen die 3 Buttons mit den verschiedenen Spielstärken
 window.addEventListener("load", function () {
     createButton();
     console.log("so viele buttons wurden hinzugefügt " + buttons.length);
 });
 //Funktion um wieder auf die Startseite zu gelanden - 3 Buttons/ 3 Spielstärken erscheinden wieder 
+//quick & dirty , aber so kann man erneut spielen 
 function playAgain() {
     location.reload();
 }
 document.querySelector(".fa-redo").addEventListener("click", function () {
     playAgain();
 });
+//Deklaration vieler Arrays , Variablen , Objekten 
 var yourScore = 0;
 var rivalScore = 0;
 var yourScoreDOMElement;
@@ -39,7 +41,10 @@ var cheerSound = new Audio("../assets/cheerSound.mp3");
 var selected = [];
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 var itsaMatch;
+//Die karten die erzeugt werden bei der jeweiligen Spielstärke werden wiederum in ein Array gepusht 
+//SO kann der Computer nur Karten randomly aussuchen, die sich auch wirklich auf dem Spielfeld befinden 
 var cardsOnField = [];
+//Hier sind alle 32 Karten gespeichert, mit ihren einzelnen Merkmalen 
 var cards = [
     {
         text: "DOM- Manipulation bezeichnet...",
@@ -236,7 +241,7 @@ var cards = [
 ];
 console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.length);
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
-//youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
+//QUELLE: youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
 function shuffleCardsEASY(cards) {
     for (var i = 8 - 1; i > 0; i--) {
         var randomNumber = Math.floor(Math.random() * (i + 1)); //randomNumber spuckt uns eine random zahl aus unserem arrays raus
@@ -244,7 +249,7 @@ function shuffleCardsEASY(cards) {
         cards[i] = cards[randomNumber];
         cards[randomNumber] = temp; //temp ist dafür da den ausgesuchten wert mit der randomnumber  zu swappen
         //i kann natürlich nicht kleiner als null sein, da es nur 8 karten hier gibt die zum shufflen da sind
-        //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array verwendet
+        //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array cards verwendet
     }
 }
 function shuffleCardsAVERAGE(cards) {
@@ -266,8 +271,8 @@ function shuffleCardsHARD(cards) {
 window.addEventListener("load", function () {
     yourScoreDOMElement = document.querySelector(".yourScore");
     rivalScoreDOMElement = document.querySelector(".rivalScore");
-    //diese Funtkion soll ausgeführt werden beim Klicken des EASY Buttons - 8 Karten/ divs werden erzeugt und das
-    //MemoryBoard/ die Flexbox 
+    //Diese Funktion erstellt sowohl eine Flexbox abhängig von der Anzahl an Karten/ der Spielstärke und erstellt eine Karte/ ein div. 
+    //Der Karte werden Attribute angehängt wie in meinem Objekt-Array cards beschrieben ( text, color, pic, background)
     function CreateGAME(card, cardsnumber) {
         yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
         rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
@@ -323,6 +328,16 @@ window.addEventListener("load", function () {
         background.className = "background";
         background.src = card.background;
         card1.appendChild(background);
+        //kinder werden an den dom angehängt, abhängig von der anzahl an karten und somit an die jeweilige flexbox
+        if (cardsnumber == 8) {
+            document.querySelector("#memoryBoard1").appendChild(card1);
+        }
+        if (cardsnumber == 16) {
+            document.querySelector("#memoryBoard2").appendChild(card1);
+        }
+        if (cardsnumber == 32) {
+            document.querySelector("#memoryBoard3").appendChild(card1);
+        }
         //Je nach Spielstärke werden so und so viele Karten in das Array cardsOnField gepusht
         //So kann der computer randomly davon 2 karten aufdecken, die auch wirklich auf dem Spielfeld sind
         cardsOnField.push({
@@ -330,12 +345,13 @@ window.addEventListener("load", function () {
             uncovered: card1,
             properties: card
         });
-        if (selected.length != 2) {
+        if (selected.length <= 2) {
             //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
             //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
             card1.addEventListener("click", function () {
-                //die funktion, um die karten zu flippen 
+                //Anweisungen, um die karten zu flippen 
                 background.style.visibility = "hidden";
+                //Die karte, die geklickt wurde, kommt in den Array selected 
                 selected.push({
                     reverse: background,
                     uncovered: card1,
@@ -344,6 +360,7 @@ window.addEventListener("load", function () {
                 //console.log(selected.length);
                 //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
                 if (selected.length == 2) {
+                    //die FUnktion checkformatch ist weiter unten auffindbar 
                     var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
                     if (itsaMatch_1 == true) {
                         //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
@@ -377,6 +394,7 @@ window.addEventListener("load", function () {
                             console.log(" es sind wieder " + selected.length + " Karten selected");
                         }, 2200);
                         //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
+                        //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
                         setTimeout(function () {
                             rivalsTurn();
                         }, 3500);
@@ -384,17 +402,20 @@ window.addEventListener("load", function () {
                 }
             });
         }
-        //kinder werden an den dom angehängt, abhängig von der anzahl an karten und somit an die jeweilige flexbox
-        if (cardsnumber == 8) {
-            document.querySelector("#memoryBoard1").appendChild(card1);
-        }
-        if (cardsnumber == 16) {
-            document.querySelector("#memoryBoard2").appendChild(card1);
-        }
-        if (cardsnumber == 32) {
-            document.querySelector("#memoryBoard3").appendChild(card1);
-        }
-        return card1;
+        //return card1;
+    }
+    //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
+    //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
+    function start(numberOfCards) {
+        for (var i = 0; i < numberOfCards; i++)
+            CreateGAME(cards[i], numberOfCards);
+    }
+    function checkForMatch(firstCard, secondCard) {
+        //die erste Karte entspricht der ersten Stelle im Array selected
+        firstCard = selected[0];
+        secondCard = selected[1];
+        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
+        return firstCard.properties.color === secondCard.properties.color;
     }
     function rivalsTurn() {
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
@@ -447,12 +468,6 @@ window.addEventListener("load", function () {
             }, 3000);
         }
     }
-    //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
-    //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
-    function start(numberOfCards) {
-        for (var i = 0; i < numberOfCards; i++)
-            CreateGAME(cards[i], numberOfCards);
-    }
     //Eventlistener für jeden Button EASY AVERAGE HARD, Button sollen verschwinden UND CreateGAME funktion wird ausgeführt
     //es wird übergeben wie viele karten erzeugt werden sollen und das Array wird bei jedem Klick neu geshufflet
     document.getElementById("button1").addEventListener("click", function () {
@@ -476,12 +491,5 @@ window.addEventListener("load", function () {
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
     });
-    function checkForMatch(firstCard, secondCard) {
-        //die erste Karte entspricht der ersten Stelle im Array selected
-        firstCard = selected[0];
-        secondCard = selected[1];
-        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
-        return firstCard.properties.color === secondCard.properties.color;
-    }
 });
 //# sourceMappingURL=script.js.map
