@@ -36,6 +36,7 @@ var rivalScore = 0;
 var yourScoreDOMElement;
 var rivalScoreDOMElement;
 var cheerSound = new Audio("../assets/cheerSound.mp3");
+var matchSound = new Audio("../assets/itsaMatch.mp3");
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 var selected = [];
@@ -369,6 +370,7 @@ window.addEventListener("load", function () {
                             //und das Array selected wird wieder geleert
                             selected[0].uncovered.style.visibility = "hidden";
                             selected[1].uncovered.style.visibility = "hidden";
+                            matchSound.play();
                             //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
                             //nicht mehr zufällig aussuchen kann
                             cardsOnField.splice(cardsOnField.indexOf(selected[0]), 1);
@@ -446,6 +448,7 @@ window.addEventListener("load", function () {
             setTimeout(function () {
                 pickedCard1.uncovered.style.visibility = "hidden";
                 pickedCard2.uncovered.style.visibility = "hidden";
+                matchSound.play();
                 //Die 2 zusammenpassenden Karten werden komplett aus dem Array gestrichen, damit sie nicht nochmal 
                 //ausgewählt werden können / die 1 bei splice sagt wie viele Elemente rausgeschnitten werden und da wir 
                 //den index von der zufälligen karte nicht kennen benutzen wir indexOf

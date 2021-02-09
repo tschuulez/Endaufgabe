@@ -60,6 +60,7 @@ let yourScoreDOMElement: HTMLElement;
 let rivalScoreDOMElement: HTMLElement;
 
 let cheerSound: HTMLAudioElement = new Audio ("../assets/cheerSound.mp3");
+let matchSound: HTMLAudioElement = new Audio ("../assets/itsaMatch.mp3");
 
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
@@ -419,6 +420,8 @@ window.addEventListener("load", function (): void {
             properties:  card
         });
 
+        
+
 
 
         
@@ -449,6 +452,8 @@ window.addEventListener("load", function (): void {
                      //und das Array selected wird wieder geleert
                      selected[0].uncovered.style.visibility = "hidden";
                      selected[1].uncovered.style.visibility = "hidden";
+
+                     matchSound.play();
                      
                      //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
                      //nicht mehr zufällig aussuchen kann
@@ -515,6 +520,8 @@ window.addEventListener("load", function (): void {
     function start(numberOfCards: number): void {
         for (var i: number = 0; i < numberOfCards; i++)
             CreateGAME(cards[i], numberOfCards);
+        
+        
     }
 
     function checkForMatch( firstCard: SelectedCard, secondCard: SelectedCard): boolean {
@@ -565,6 +572,8 @@ window.addEventListener("load", function (): void {
                 
                 pickedCard1.uncovered.style.visibility = "hidden";
                 pickedCard2.uncovered.style.visibility = "hidden";
+
+                matchSound.play();
 
                 //Die 2 zusammenpassenden Karten werden komplett aus dem Array gestrichen, damit sie nicht nochmal 
                 //ausgewählt werden können / die 1 bei splice sagt wie viele Elemente rausgeschnitten werden und da wir 
@@ -639,6 +648,7 @@ window.addEventListener("load", function (): void {
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
+        
         
 
     });
