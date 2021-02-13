@@ -58,6 +58,7 @@ let yourScore: number = 0;
 let rivalScore: number = 0;
 let yourScoreDOMElement: HTMLElement;
 let rivalScoreDOMElement: HTMLElement;
+let card1: HTMLDivElement;
 
 let cheerSound: HTMLAudioElement = new Audio ("../assets/cheerSound.mp3");
 let matchSound: HTMLAudioElement = new Audio ("../assets/itsaMatch.mp3");
@@ -68,6 +69,8 @@ let selected: SelectedCard [] = [];
 
  //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 let itsaMatch: boolean; 
+let itsYourTurn: boolean; 
+
 
 //Interface für meine Karten-Objekte
 interface Card {
@@ -378,7 +381,7 @@ window.addEventListener("load", function (): void {
         //sont hat jede karte (auch wenn kein Bild vorhanden ist) einen störenden leeren Rahmen
         if ( card.pic != "" && cardsnumber != 32) {
         if ( cardsnumber == 8 ) {
-            //erstelllen der Piktogramme
+             //erstelllen der Piktogramme
             let picto: HTMLImageElement = document.createElement("img");
             picto.className = "pictoEASY";
             picto.src = card.pic;
@@ -425,7 +428,7 @@ window.addEventListener("load", function (): void {
 
 
         
-        if (selected.length <= 2) {
+        if (itsYourTurn == true) {
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
         card1.addEventListener("click", function(): void {
@@ -436,12 +439,13 @@ window.addEventListener("load", function (): void {
             selected.push({
                 reverse: background,
                 uncovered: card1,
-                properties:  card
+                 properties:  card
             });
-            //console.log(selected.length);
+            console.log(selected.length);
 
             //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
             if (selected.length == 2) {
+            
             //die FUnktion checkformatch ist weiter unten auffindbar 
             let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
  
@@ -490,7 +494,9 @@ window.addEventListener("load", function (): void {
                 //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
                 //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
                     setTimeout (function(): void {
+                        console.log( cardsOnField.length);
                         rivalsTurn();
+                        
 
                     },          3500);
 
@@ -502,7 +508,8 @@ window.addEventListener("load", function (): void {
                   
                
         });
-        }
+    }
+        
 
 
 
@@ -512,7 +519,7 @@ window.addEventListener("load", function (): void {
 
         
 
-        //return card1;
+        
     }
 
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
@@ -524,6 +531,8 @@ window.addEventListener("load", function (): void {
         
     }
 
+    
+
     function checkForMatch( firstCard: SelectedCard, secondCard: SelectedCard): boolean {
         //die erste Karte entspricht der ersten Stelle im Array selected
         firstCard = selected[0];
@@ -533,10 +542,12 @@ window.addEventListener("load", function (): void {
     }
 
     function rivalsTurn(): void {
-
+        
+        itsYourTurn = false;
+        
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
-        let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
-        let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+        let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length )];
+        let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length )];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
         while (pickedCard1 == pickedCard2) {
@@ -561,6 +572,7 @@ window.addEventListener("load", function (): void {
         //beide Karten werden in den selected Array bepusht, um mit checkForMatch verglichen werden zu können
         //generell kommen alle ausgeählten karten in diesen Array
         selected.push(pickedCard1, pickedCard2);
+        
 
         //console.log(selected.length);
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
@@ -593,13 +605,19 @@ window.addEventListener("load", function (): void {
             rivalsTurn();
         }
         if (itsaMatch == false) {
+
+            
             setTimeout(function(): void {
-                selected[0].reverse.style.visibility = "visible";
-                selected[1].reverse.style.visibility = "visible";
+                pickedCard1.reverse.style.visibility = "visible";
+                pickedCard2.reverse.style.visibility = "visible";
                 selected = [];
                 console.log(selected.length);
 
+                itsYourTurn = true; 
             },         3000);
+
+            
+
     }
 
 

@@ -35,6 +35,7 @@ var yourScore = 0;
 var rivalScore = 0;
 var yourScoreDOMElement;
 var rivalScoreDOMElement;
+var card1;
 var cheerSound = new Audio("../assets/cheerSound.mp3");
 var matchSound = new Audio("../assets/itsaMatch.mp3");
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
@@ -42,6 +43,7 @@ var matchSound = new Audio("../assets/itsaMatch.mp3");
 var selected = [];
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 var itsaMatch;
+var itsYourTurn;
 //Die karten die erzeugt werden bei der jeweiligen Spielstärke werden wiederum in ein Array gepusht 
 //SO kann der Computer nur Karten randomly aussuchen, die sich auch wirklich auf dem Spielfeld befinden 
 var cardsOnField = [];
@@ -346,7 +348,7 @@ window.addEventListener("load", function () {
             uncovered: card1,
             properties: card
         });
-        if (selected.length <= 2) {
+        if (itsYourTurn == true) {
             //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
             //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
             card1.addEventListener("click", function () {
@@ -358,7 +360,7 @@ window.addEventListener("load", function () {
                     uncovered: card1,
                     properties: card
                 });
-                //console.log(selected.length);
+                console.log(selected.length);
                 //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
                 if (selected.length == 2) {
                     //die FUnktion checkformatch ist weiter unten auffindbar 
@@ -398,13 +400,13 @@ window.addEventListener("load", function () {
                         //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
                         //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
                         setTimeout(function () {
+                            console.log(cardsOnField.length);
                             rivalsTurn();
                         }, 3500);
                     }
                 }
             });
         }
-        //return card1;
     }
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
     //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
@@ -420,6 +422,7 @@ window.addEventListener("load", function () {
         return firstCard.properties.color === secondCard.properties.color;
     }
     function rivalsTurn() {
+        itsYourTurn = false;
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
         var pickedCard1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
         var pickedCard2 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
@@ -464,10 +467,11 @@ window.addEventListener("load", function () {
         }
         if (itsaMatch == false) {
             setTimeout(function () {
-                selected[0].reverse.style.visibility = "visible";
-                selected[1].reverse.style.visibility = "visible";
+                pickedCard1.reverse.style.visibility = "visible";
+                pickedCard2.reverse.style.visibility = "visible";
                 selected = [];
                 console.log(selected.length);
+                itsYourTurn = true;
             }, 3000);
         }
     }
