@@ -428,7 +428,7 @@ window.addEventListener("load", function (): void {
 
 
         
-        if (itsYourTurn == true) {
+        
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
         card1.addEventListener("click", function(): void {
@@ -446,12 +446,12 @@ window.addEventListener("load", function (): void {
             //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
             if (selected.length == 2) {
             
-            //die FUnktion checkformatch ist weiter unten auffindbar 
-            let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
+              //die FUnktion checkformatch ist weiter unten auffindbar 
+              let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
  
-            if (itsaMatch == true) {
+              if (itsaMatch == true) {
                      //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
-                     setTimeout(function(): void {
+                    setTimeout(function(): void {
                      //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
                      //und das Array selected wird wieder geleert
                      selected[0].uncovered.style.visibility = "hidden";
@@ -472,14 +472,11 @@ window.addEventListener("load", function (): void {
                      yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
                      // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
                      console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld"); 
-                
-                     
-
-                    },          2200);
-                    }
+                    },         2200);
+                }
                 //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
                 //werden, indem wir den style wieder auf visible verändern
-            if (itsaMatch == false) {
+              if (itsaMatch == false) {
                     setTimeout(function(): void {
                         selected[0].reverse.style.visibility = "visible";
                         selected[1].reverse.style.visibility = "visible";
@@ -491,34 +488,16 @@ window.addEventListener("load", function (): void {
 
                     },         2200);
 
-                //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
-                //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
+                    //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
+                    //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
                     setTimeout (function(): void {
                         console.log( cardsOnField.length);
                         rivalsTurn();
-                        
-
                     },          3500);
-
-                    
-
-            }
-            }     
-                
-                  
-               
+                }
+            }            
         });
-    }
-        
-
-
-
-
-
-        
-
-        
-
+       
         
     }
 
@@ -533,30 +512,18 @@ window.addEventListener("load", function (): void {
 
     
 
-    function checkForMatch( firstCard: SelectedCard, secondCard: SelectedCard): boolean {
-        //die erste Karte entspricht der ersten Stelle im Array selected
-        firstCard = selected[0];
-        secondCard = selected[1];
-        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
-        return firstCard.properties.color === secondCard.properties.color;   
-    }
-
     function rivalsTurn(): void {
         
-        itsYourTurn = false;
+        //itsYourTurn = false;
         
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
-        let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length )];
-        let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * cardsOnField.length )];
+        let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length) )];
+        let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length) )];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
         while (pickedCard1 == pickedCard2) {
-            pickedCard2 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
-               
-        
+            pickedCard2 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length) )];
         }
-        
-        
 
         setTimeout(function(): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
@@ -568,15 +535,9 @@ window.addEventListener("load", function (): void {
             pickedCard2.reverse.style.visibility = "hidden";
             
         },         500);  
-       
-        //beide Karten werden in den selected Array bepusht, um mit checkForMatch verglichen werden zu können
-        //generell kommen alle ausgeählten karten in diesen Array
-        selected.push(pickedCard1, pickedCard2);
-        
-
-        //console.log(selected.length);
+    
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
-        let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
+        let itsaMatch: boolean = checkForMatch(pickedCard1, pickedCard2);
         //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
         //und die Karten verschwinden oder werden erneut zugedeckt
         if (itsaMatch == true) {
@@ -592,9 +553,7 @@ window.addEventListener("load", function (): void {
                 //den index von der zufälligen karte nicht kennen benutzen wir indexOf
                 cardsOnField.splice(cardsOnField.indexOf(pickedCard1), 1);
                 cardsOnField.splice(cardsOnField.indexOf(pickedCard2), 1);
-                selected = [];
                 
-            
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld"); 
@@ -605,35 +564,20 @@ window.addEventListener("load", function (): void {
             rivalsTurn();
         }
         if (itsaMatch == false) {
-
             
+            //itsYourTurn = true; 
             setTimeout(function(): void {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
-                selected = [];
-                console.log(selected.length);
+            },         3000);   
 
-                itsYourTurn = true; 
-            },         3000);
-
-            
-
+        }
     }
 
-
-
-
-
+    function checkForMatch( firstCard: SelectedCard, secondCard: SelectedCard): boolean {
+        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
+        return firstCard.properties.color === secondCard.properties.color;   
     }
-
-
-
-        
-
-    
-    
-
-
     //Eventlistener für jeden Button EASY AVERAGE HARD, Button sollen verschwinden UND CreateGAME funktion wird ausgeführt
     //es wird übergeben wie viele karten erzeugt werden sollen und das Array wird bei jedem Klick neu geshufflet
     document.getElementById("button1").addEventListener("click", function (): void {
@@ -643,9 +587,6 @@ window.addEventListener("load", function (): void {
         start(8);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
-        
-
-
     });
 
     document.getElementById("button2").addEventListener("click", function (): void {
@@ -655,8 +596,6 @@ window.addEventListener("load", function (): void {
         start(16);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
-        
-
     });
 
     document.getElementById("button3").addEventListener("click", function (): void {
@@ -666,12 +605,7 @@ window.addEventListener("load", function (): void {
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
-        
-        
-
-    });
-
-    
+    });  
 });
 
                 

@@ -348,65 +348,63 @@ window.addEventListener("load", function () {
             uncovered: card1,
             properties: card
         });
-        if (itsYourTurn == true) {
-            //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
-            //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
-            card1.addEventListener("click", function () {
-                //Anweisungen, um die karten zu flippen 
-                background.style.visibility = "hidden";
-                //Die karte, die geklickt wurde, kommt in den Array selected 
-                selected.push({
-                    reverse: background,
-                    uncovered: card1,
-                    properties: card
-                });
-                console.log(selected.length);
-                //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
-                if (selected.length == 2) {
-                    //die FUnktion checkformatch ist weiter unten auffindbar 
-                    var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
-                    if (itsaMatch_1 == true) {
-                        //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
-                        setTimeout(function () {
-                            //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
-                            //und das Array selected wird wieder geleert
-                            selected[0].uncovered.style.visibility = "hidden";
-                            selected[1].uncovered.style.visibility = "hidden";
-                            matchSound.play();
-                            //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
-                            //nicht mehr zufällig aussuchen kann
-                            cardsOnField.splice(cardsOnField.indexOf(selected[0]), 1);
-                            cardsOnField.splice(cardsOnField.indexOf(selected[1]), 1);
-                            selected = [];
-                            console.log(selected.length);
-                            //der score des interaktiven Nutzers wird um eine ganze Zahl erhöht
-                            yourScore++;
-                            //folglich wird der DOM so manipuliert -> es folgt eine immer aktuelle Score Anzeige 
-                            yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
-                            // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
-                            console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
-                        }, 2200);
-                    }
-                    //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
-                    //werden, indem wir den style wieder auf visible verändern
-                    if (itsaMatch_1 == false) {
-                        setTimeout(function () {
-                            selected[0].reverse.style.visibility = "visible";
-                            selected[1].reverse.style.visibility = "visible";
-                            //auch hier wird der Array wieder geleert, um neue Karten auszuwählen und das nach jedem try
-                            selected = [];
-                            console.log(" es sind wieder " + selected.length + " Karten selected");
-                        }, 2200);
-                        //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
-                        //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
-                        setTimeout(function () {
-                            console.log(cardsOnField.length);
-                            rivalsTurn();
-                        }, 3500);
-                    }
-                }
+        //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
+        //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
+        card1.addEventListener("click", function () {
+            //Anweisungen, um die karten zu flippen 
+            background.style.visibility = "hidden";
+            //Die karte, die geklickt wurde, kommt in den Array selected 
+            selected.push({
+                reverse: background,
+                uncovered: card1,
+                properties: card
             });
-        }
+            console.log(selected.length);
+            //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
+            if (selected.length == 2) {
+                //die FUnktion checkformatch ist weiter unten auffindbar 
+                var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
+                if (itsaMatch_1 == true) {
+                    //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
+                    setTimeout(function () {
+                        //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
+                        //und das Array selected wird wieder geleert
+                        selected[0].uncovered.style.visibility = "hidden";
+                        selected[1].uncovered.style.visibility = "hidden";
+                        matchSound.play();
+                        //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
+                        //nicht mehr zufällig aussuchen kann
+                        cardsOnField.splice(cardsOnField.indexOf(selected[0]), 1);
+                        cardsOnField.splice(cardsOnField.indexOf(selected[1]), 1);
+                        selected = [];
+                        console.log(selected.length);
+                        //der score des interaktiven Nutzers wird um eine ganze Zahl erhöht
+                        yourScore++;
+                        //folglich wird der DOM so manipuliert -> es folgt eine immer aktuelle Score Anzeige 
+                        yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
+                        // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
+                        console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
+                    }, 2200);
+                }
+                //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
+                //werden, indem wir den style wieder auf visible verändern
+                if (itsaMatch_1 == false) {
+                    setTimeout(function () {
+                        selected[0].reverse.style.visibility = "visible";
+                        selected[1].reverse.style.visibility = "visible";
+                        //auch hier wird der Array wieder geleert, um neue Karten auszuwählen und das nach jedem try
+                        selected = [];
+                        console.log(" es sind wieder " + selected.length + " Karten selected");
+                    }, 2200);
+                    //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
+                    //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
+                    setTimeout(function () {
+                        console.log(cardsOnField.length);
+                        rivalsTurn();
+                    }, 3500);
+                }
+            }
+        });
     }
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
     //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
@@ -414,22 +412,15 @@ window.addEventListener("load", function () {
         for (var i = 0; i < numberOfCards; i++)
             CreateGAME(cards[i], numberOfCards);
     }
-    function checkForMatch(firstCard, secondCard) {
-        //die erste Karte entspricht der ersten Stelle im Array selected
-        firstCard = selected[0];
-        secondCard = selected[1];
-        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
-        return firstCard.properties.color === secondCard.properties.color;
-    }
     function rivalsTurn() {
-        itsYourTurn = false;
+        //itsYourTurn = false;
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
-        var pickedCard1 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
-        var pickedCard2 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+        var pickedCard1 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
+        var pickedCard2 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
         while (pickedCard1 == pickedCard2) {
-            pickedCard2 = cardsOnField[Math.floor(Math.random() * cardsOnField.length)];
+            pickedCard2 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         }
         setTimeout(function () {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
@@ -439,12 +430,8 @@ window.addEventListener("load", function () {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard2.reverse.style.visibility = "hidden";
         }, 500);
-        //beide Karten werden in den selected Array bepusht, um mit checkForMatch verglichen werden zu können
-        //generell kommen alle ausgeählten karten in diesen Array
-        selected.push(pickedCard1, pickedCard2);
-        //console.log(selected.length);
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
-        var itsaMatch = checkForMatch(selected[0], selected[1]);
+        var itsaMatch = checkForMatch(pickedCard1, pickedCard2);
         //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
         //und die Karten verschwinden oder werden erneut zugedeckt
         if (itsaMatch == true) {
@@ -457,7 +444,6 @@ window.addEventListener("load", function () {
                 //den index von der zufälligen karte nicht kennen benutzen wir indexOf
                 cardsOnField.splice(cardsOnField.indexOf(pickedCard1), 1);
                 cardsOnField.splice(cardsOnField.indexOf(pickedCard2), 1);
-                selected = [];
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
@@ -466,14 +452,16 @@ window.addEventListener("load", function () {
             rivalsTurn();
         }
         if (itsaMatch == false) {
+            //itsYourTurn = true; 
             setTimeout(function () {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
-                selected = [];
-                console.log(selected.length);
-                itsYourTurn = true;
             }, 3000);
         }
+    }
+    function checkForMatch(firstCard, secondCard) {
+        //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
+        return firstCard.properties.color === secondCard.properties.color;
     }
     //Eventlistener für jeden Button EASY AVERAGE HARD, Button sollen verschwinden UND CreateGAME funktion wird ausgeführt
     //es wird übergeben wie viele karten erzeugt werden sollen und das Array wird bei jedem Klick neu geshufflet
