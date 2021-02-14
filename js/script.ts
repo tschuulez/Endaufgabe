@@ -60,16 +60,16 @@ let yourScoreDOMElement: HTMLElement;
 let rivalScoreDOMElement: HTMLElement;
 let card1: HTMLDivElement;
 
-let cheerSound: HTMLAudioElement = new Audio ("../assets/cheerSound.mp3");
-let matchSound: HTMLAudioElement = new Audio ("../assets/itsaMatch.mp3");
+let cheerSound: HTMLAudioElement = new Audio("../assets/cheerSound.mp3");
+let matchSound: HTMLAudioElement = new Audio("../assets/itsaMatch.mp3");
 
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
-let selected: SelectedCard [] = []; 
+let selected: SelectedCard[] = [];
 
- //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
-let itsaMatch: boolean; 
-let itsYourTurn: boolean; 
+//boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
+let itsaMatch: boolean;
+let youCanClick: boolean;
 
 
 //Interface für meine Karten-Objekte
@@ -89,7 +89,7 @@ interface SelectedCard {
 
 //Die karten die erzeugt werden bei der jeweiligen Spielstärke werden wiederum in ein Array gepusht 
 //SO kann der Computer nur Karten randomly aussuchen, die sich auch wirklich auf dem Spielfeld befinden 
-const cardsOnField: SelectedCard [] = [];
+const cardsOnField: SelectedCard[] = [];
 //Hier sind alle 32 Karten gespeichert, mit ihren einzelnen Merkmalen 
 const cards: Card[] = [
     {
@@ -334,12 +334,12 @@ window.addEventListener("load", function (): void {
 
     yourScoreDOMElement = document.querySelector(".yourScore");
     rivalScoreDOMElement = document.querySelector(".rivalScore");
-    
+
     //Diese Funktion erstellt sowohl eine Flexbox abhängig von der Anzahl an Karten/ der Spielstärke und erstellt eine Karte/ ein div. 
     //Der Karte werden Attribute angehängt wie in meinem Objekt-Array cards beschrieben ( text, color, pic, background)
     function CreateGAME(card: Card, cardsnumber: number): void {
 
-        
+
         yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
         rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
 
@@ -379,22 +379,22 @@ window.addEventListener("load", function (): void {
 
         //nur wenn bei dem Objekt eine Bildquelle vorhanden ist, soll die Option eines Bildes erst da sein
         //sont hat jede karte (auch wenn kein Bild vorhanden ist) einen störenden leeren Rahmen
-        if ( card.pic != "" && cardsnumber != 32) {
-        if ( cardsnumber == 8 ) {
-             //erstelllen der Piktogramme
-            let picto: HTMLImageElement = document.createElement("img");
-            picto.className = "pictoEASY";
-            picto.src = card.pic;
-            card1.appendChild(picto);
-        }    
-        else {
-            let picto: HTMLImageElement = document.createElement("img");
-            picto.className = "picto";
-            picto.src = card.pic;
-            card1.appendChild(picto);
+        if (card.pic != "" && cardsnumber != 32) {
+            if (cardsnumber == 8) {
+                //erstelllen der Piktogramme
+                let picto: HTMLImageElement = document.createElement("img");
+                picto.className = "pictoEASY";
+                picto.src = card.pic;
+                card1.appendChild(picto);
+            }
+            else {
+                let picto: HTMLImageElement = document.createElement("img");
+                picto.className = "picto";
+                picto.src = card.pic;
+                card1.appendChild(picto);
+            }
         }
-        }
-        
+
         //erstellen eines vierten attributs, um alle karten zu bedecken, dieses Bild wird dem div card1 angehängt im DOM
         //und in css positioniert, um alle gestylten karten zu bedecken 
         let background: HTMLImageElement = document.createElement("img");
@@ -402,7 +402,7 @@ window.addEventListener("load", function (): void {
         background.src = card.background;
         card1.appendChild(background);
 
-        
+
 
         //kinder werden an den dom angehängt, abhängig von der anzahl an karten und somit an die jeweilige flexbox
         if (cardsnumber == 8) {
@@ -420,18 +420,16 @@ window.addEventListener("load", function (): void {
         cardsOnField.push({
             reverse: background,
             uncovered: card1,
-            properties:  card
+            properties: card
         });
 
-        
-
-
-
-        
-        
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
-        card1.addEventListener("click", function(): void {
+        card1.addEventListener("click", function (): void {
+
+            if (youCanClick == false) {
+                return;
+            }
 
             //Anweisungen, um die karten zu flippen 
             background.style.visibility = "hidden";
@@ -439,48 +437,51 @@ window.addEventListener("load", function (): void {
             selected.push({
                 reverse: background,
                 uncovered: card1,
-                 properties:  card
+                properties: card
             });
             console.log(selected.length);
 
             //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
             if (selected.length == 2) {
-            
-              //die FUnktion checkformatch ist weiter unten auffindbar 
-              let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
- 
-              if (itsaMatch == true) {
-                     //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
-                    setTimeout(function(): void {
-                     //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
-                     //und das Array selected wird wieder geleert
-                     selected[0].uncovered.style.visibility = "hidden";
-                     selected[1].uncovered.style.visibility = "hidden";
 
-                     matchSound.play();
-                     
-                     //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
-                     //nicht mehr zufällig aussuchen kann
-                     cardsOnField.splice(cardsOnField.indexOf(selected[0]), 1);
-                     cardsOnField.splice(cardsOnField.indexOf(selected[1]), 1);
-                     selected = [];
-                     console.log(selected.length);
+                youCanClick = false;
 
-                     //der score des interaktiven Nutzers wird um eine ganze Zahl erhöht
-                     yourScore++;
-                     //folglich wird der DOM so manipuliert -> es folgt eine immer aktuelle Score Anzeige 
-                     yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
-                     // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
-                     console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld"); 
+                //die FUnktion checkformatch ist weiter unten auffindbar 
+                let itsaMatch: boolean = checkForMatch(selected[0], selected[1]);
+
+                if (itsaMatch == true) {
+                    //mit einem SetTimeoit legt man fest wie schnell dieser vergleichsprozess stattfinden soll
+                    setTimeout(function (): void {
+                        //Wenn es sich um ein Pärchen handelt, sollen diese 2 Karten verschwinden und der Score erhöht werden
+                        //und das Array selected wird wieder geleert
+                        selected[0].uncovered.style.visibility = "hidden";
+                        selected[1].uncovered.style.visibility = "hidden";
+                        youCanClick = true;
+
+                        matchSound.play();
+
+                        //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
+                        //nicht mehr zufällig aussuchen kann
+                        cardsOnField.splice(cardsOnField.indexOf(selected[0]), 1);
+                        cardsOnField.splice(cardsOnField.indexOf(selected[1]), 1);
+                        selected = [];
+                        console.log(selected.length);
+
+                        //der score des interaktiven Nutzers wird um eine ganze Zahl erhöht
+                        yourScore++;
+                        //folglich wird der DOM so manipuliert -> es folgt eine immer aktuelle Score Anzeige 
+                        yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
+                        // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
+                        console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
                     },         2200);
                 }
                 //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
                 //werden, indem wir den style wieder auf visible verändern
-              if (itsaMatch == false) {
-                    setTimeout(function(): void {
+                if (itsaMatch == false) {
+                    setTimeout(function (): void {
                         selected[0].reverse.style.visibility = "visible";
                         selected[1].reverse.style.visibility = "visible";
-                    
+
                         //auch hier wird der Array wieder geleert, um neue Karten auszuwählen und das nach jedem try
                         selected = [];
                         console.log(" es sind wieder " + selected.length + " Karten selected");
@@ -490,59 +491,48 @@ window.addEventListener("load", function (): void {
 
                     //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
                     //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
-                    setTimeout (function(): void {
-                        console.log( cardsOnField.length);
+                    setTimeout(function (): void {
+                        console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
                         rivalsTurn();
-                    },          3500);
+                    },         3500);
                 }
-            }            
+            }
         });
-       
-        
-    }
 
-    //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
-    //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
-    function start(numberOfCards: number): void {
-        for (var i: number = 0; i < numberOfCards; i++)
-            CreateGAME(cards[i], numberOfCards);
-        
-        
-    }
 
-    
+    }
 
     function rivalsTurn(): void {
-        
-        //itsYourTurn = false;
-        
+
+        youCanClick = false;
+
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
-        let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length) )];
-        let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length) )];
+        let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
+        let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         //Wenn ausversehen dieselbe Karte ausgewählt wird soll solange nach neuen karten geguckt werden bis es sich 
         //nicht mehr um dieselbe Karte handelt
         while (pickedCard1 == pickedCard2) {
-            pickedCard2 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length) )];
+            pickedCard2 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         }
 
-        setTimeout(function(): void {
+        setTimeout(function (): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard1.reverse.style.visibility = "hidden";
-            
-        },         1600);  
-        setTimeout(function(): void {
+
+        },         1600);
+        setTimeout(function (): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard2.reverse.style.visibility = "hidden";
-            
-        },         500);  
-    
+
+        },         500);
+
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
         let itsaMatch: boolean = checkForMatch(pickedCard1, pickedCard2);
         //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
         //und die Karten verschwinden oder werden erneut zugedeckt
         if (itsaMatch == true) {
-            setTimeout(function(): void {
-                
+            setTimeout(function (): void {
+
                 pickedCard1.uncovered.style.visibility = "hidden";
                 pickedCard2.uncovered.style.visibility = "hidden";
 
@@ -553,30 +543,43 @@ window.addEventListener("load", function (): void {
                 //den index von der zufälligen karte nicht kennen benutzen wir indexOf
                 cardsOnField.splice(cardsOnField.indexOf(pickedCard1), 1);
                 cardsOnField.splice(cardsOnField.indexOf(pickedCard2), 1);
-                
+
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
-                console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld"); 
+                console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
 
-               },      3000);
+                //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
+                rivalsTurn();
 
-               //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
-            rivalsTurn();
+            },         3000);
+
+
         }
         if (itsaMatch == false) {
+
             
-            //itsYourTurn = true; 
-            setTimeout(function(): void {
+            setTimeout(function (): void {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
-            },         3000);   
+                youCanClick = true;
+            },         3000);
 
         }
+        
     }
 
-    function checkForMatch( firstCard: SelectedCard, secondCard: SelectedCard): boolean {
+    //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
+    //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
+    function start(numberOfCards: number): void {
+        for (var i: number = 0; i < numberOfCards; i++)
+            CreateGAME(cards[i], numberOfCards);
+
+
+    }
+
+    function checkForMatch(firstCard: SelectedCard, secondCard: SelectedCard): boolean {
         //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
-        return firstCard.properties.color === secondCard.properties.color;   
+        return firstCard.properties.color === secondCard.properties.color;
     }
     //Eventlistener für jeden Button EASY AVERAGE HARD, Button sollen verschwinden UND CreateGAME funktion wird ausgeführt
     //es wird übergeben wie viele karten erzeugt werden sollen und das Array wird bei jedem Klick neu geshufflet
@@ -605,7 +608,6 @@ window.addEventListener("load", function (): void {
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
-    });  
+    });
 });
 
-                

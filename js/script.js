@@ -43,7 +43,7 @@ var matchSound = new Audio("../assets/itsaMatch.mp3");
 var selected = [];
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 var itsaMatch;
-var itsYourTurn;
+var youCanClick;
 //Die karten die erzeugt werden bei der jeweiligen Spielstärke werden wiederum in ein Array gepusht 
 //SO kann der Computer nur Karten randomly aussuchen, die sich auch wirklich auf dem Spielfeld befinden 
 var cardsOnField = [];
@@ -351,6 +351,9 @@ window.addEventListener("load", function () {
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
         card1.addEventListener("click", function () {
+            if (youCanClick == false) {
+                return;
+            }
             //Anweisungen, um die karten zu flippen 
             background.style.visibility = "hidden";
             //Die karte, die geklickt wurde, kommt in den Array selected 
@@ -362,6 +365,7 @@ window.addEventListener("load", function () {
             console.log(selected.length);
             //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
             if (selected.length == 2) {
+                youCanClick = false;
                 //die FUnktion checkformatch ist weiter unten auffindbar 
                 var itsaMatch_1 = checkForMatch(selected[0], selected[1]);
                 if (itsaMatch_1 == true) {
@@ -371,6 +375,7 @@ window.addEventListener("load", function () {
                         //und das Array selected wird wieder geleert
                         selected[0].uncovered.style.visibility = "hidden";
                         selected[1].uncovered.style.visibility = "hidden";
+                        youCanClick = true;
                         matchSound.play();
                         //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
                         //nicht mehr zufällig aussuchen kann
@@ -399,21 +404,15 @@ window.addEventListener("load", function () {
                     //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
                     //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
                     setTimeout(function () {
-                        console.log(cardsOnField.length);
+                        console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
                         rivalsTurn();
                     }, 3500);
                 }
             }
         });
     }
-    //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
-    //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
-    function start(numberOfCards) {
-        for (var i = 0; i < numberOfCards; i++)
-            CreateGAME(cards[i], numberOfCards);
-    }
     function rivalsTurn() {
-        //itsYourTurn = false;
+        youCanClick = false;
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
         var pickedCard1 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         var pickedCard2 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
@@ -447,17 +446,23 @@ window.addEventListener("load", function () {
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
+                //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
+                rivalsTurn();
             }, 3000);
-            //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
-            rivalsTurn();
         }
         if (itsaMatch == false) {
-            //itsYourTurn = true; 
             setTimeout(function () {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
+                youCanClick = true;
             }, 3000);
         }
+    }
+    //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
+    //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
+    function start(numberOfCards) {
+        for (var i = 0; i < numberOfCards; i++)
+            CreateGAME(cards[i], numberOfCards);
     }
     function checkForMatch(firstCard, secondCard) {
         //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
