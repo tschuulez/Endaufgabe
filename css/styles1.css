@@ -12,17 +12,18 @@
     text-shadow: 1px 3px 5px #FFFF;
 }
 .yourScore{
-    position: relative;
+    position: absolute;
     left: 30px;
-    top: 40%;
+    top: 30%;
     text-align: left;
     color: #FFFF;
     font-size: 30px;
     font-weight: bold;
 }
 .rivalScore{
-    position: relative;
+    position: absolute;
     right: 30px;
+    top: 30%;
     
     text-align: right;
     
@@ -135,10 +136,7 @@
     width: 120px;
     margin: 6px;
     border-radius: 6px;
-    box-shadow: 0px 5px 5px 0px #FFFF;
-    visibility: hidden; 
-
-    
+    box-shadow: 0px 5px 5px 0px #FFFF;  
 }
 
 
@@ -246,11 +244,14 @@ footer{
 }
 
 #winner {
+    position: absolute;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 900;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
+    color: transparent;
     font-size: 100px;
-    text-align: center;
-    
+    top: 30% ;
+    left: 30%;
 }
 
 

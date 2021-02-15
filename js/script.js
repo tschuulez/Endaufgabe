@@ -43,6 +43,7 @@ document.body.appendChild(winner);
 winner.style.visibility = "hidden";
 var cheerSound = new Audio("../assets/cheerSound.mp3");
 var matchSound = new Audio("../assets/itsaMatch.mp3");
+var gameOverSound = new Audio("../assets/gameOver.wav");
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 var selected = [];
@@ -251,15 +252,6 @@ console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.len
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //QUELLE: youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
 function shuffle(x) {
-    var index = x.length, temp, randomNumber;
-    while (index !== 0) {
-        randomNumber = Math.floor(Math.random() * (index + 1)); //randomNumber spuckt uns eine random zahl aus unserem arrays raus
-        temp = x[index];
-        x[index] = x[randomNumber];
-        x[randomNumber] = temp; //temp ist dafür da den ausgesuchten wert mit der randomnumber  zu swappen
-        //i kann natürlich nicht kleiner als null sein, da es nur 8 karten hier gibt die zum shufflen da sind
-        //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array cards verwenden
-    }
     return x;
 }
 function WhoIsTheWinner() {
@@ -274,7 +266,7 @@ function WhoIsTheWinner() {
         setTimeout(function () {
             winner.style.visibility = "visible";
             winner.innerHTML = "GAME OVER";
-            //cheerSound.play();
+            gameOverSound.play();
         }, 2000);
     }
 }
@@ -396,6 +388,12 @@ window.addEventListener("load", function () {
                         yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
                         // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
                         console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
+                        //wenn das array cardsonfield leer ist/ wenn keine Karten mehr auf dem Spielfeld liegen
+                        //soll der Gewinner bekannt gegeben werden
+                        if (cardsOnField.length == 0) {
+                            WhoIsTheWinner();
+                            console.log("we have a winner");
+                        }
                     }, 2000);
                 }
                 //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
@@ -415,12 +413,6 @@ window.addEventListener("load", function () {
                         }, 1000);
                     }, 2000);
                 }
-            }
-            //wenn das array cardsonfield leer ist/ wenn keine Karten mehr auf dem Spielfeld liegen
-            //soll der Gewinner bekannt gegeben werden
-            if (cardsOnField.length == 0) {
-                WhoIsTheWinner();
-                console.log("we have a winner");
             }
         });
     }
