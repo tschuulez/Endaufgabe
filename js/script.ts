@@ -59,6 +59,12 @@ let rivalScore: number = 0;
 let yourScoreDOMElement: HTMLElement;
 let rivalScoreDOMElement: HTMLElement;
 let card1: HTMLDivElement;
+//unsichtbare h1 Überschrift die später den Gewinner bekannt gibt 
+let winner: HTMLElement = document.createElement("h1");
+winner.id = "winner";
+document.body.appendChild(winner);
+winner.style.visibility = "hidden";
+
 
 let cheerSound: HTMLAudioElement = new Audio("../assets/cheerSound.mp3");
 let matchSound: HTMLAudioElement = new Audio("../assets/itsaMatch.mp3");
@@ -87,12 +93,18 @@ interface SelectedCard {
     properties: Card;
 }
 
+interface Pair {
+    pair: Card[];
+}
+
 //Die karten die erzeugt werden bei der jeweiligen Spielstärke werden wiederum in ein Array gepusht 
 //SO kann der Computer nur Karten randomly aussuchen, die sich auch wirklich auf dem Spielfeld befinden 
 const cardsOnField: SelectedCard[] = [];
 //Hier sind alle 32 Karten gespeichert, mit ihren einzelnen Merkmalen 
-const cards: Card[] = [
+let cards: Card[] = [
     {
+
+
         text: "DOM- Manipulation bezeichnet...",
         color: "#EF00FF",
         pic: "assets/clipart9.svg",
@@ -104,6 +116,7 @@ const cards: Card[] = [
         pic: "assets/clipart9.svg",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Objekte sind Variablen- typen, die...",
         color: "#AED1F6",
@@ -116,6 +129,7 @@ const cards: Card[] = [
         pic: "assets/clipart7.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Der Wert von CONST-Variablen kann nicht...",
         color: "#FFF700",
@@ -128,6 +142,7 @@ const cards: Card[] = [
         pic: "assets/clipart11.svg",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: " Ein Array kann... ",
         color: "#C3E2C9",
@@ -140,6 +155,7 @@ const cards: Card[] = [
         pic: "assets/clipart8.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Statt viele Variablen zu benutzen...",
         color: "#9933FF",
@@ -152,6 +168,7 @@ const cards: Card[] = [
         pic: "assets/clipart6.svg",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Um Fehler zu vermeiden...",
         color: "#3CFF00",
@@ -164,6 +181,7 @@ const cards: Card[] = [
         pic: "assets/clipart10.svg",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Um Objekte zu deklarieren, muss... ",
         color: "#848181",
@@ -176,6 +194,7 @@ const cards: Card[] = [
         pic: "assets/clipart4.svg",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Schleifen können...",
         color: "#FDFEFE",
@@ -188,6 +207,7 @@ const cards: Card[] = [
         pic: "assets/clipart12.svg",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Eine einfache FOR-Schleife...",
         color: "#B7950B",
@@ -200,18 +220,20 @@ const cards: Card[] = [
         pic: "assets/clipart5.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
-        text: "Funktionen sind Anweisungs- blöcke, die...",
+        text: "Funktionen sind Anweisungs- blöcke, die...  ",
         color: "#FA9806",
-        pic: "",
+        pic: "assets/clipart13.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "...bestimmte Aufgaben zu einem von uns festgelegten Zeitpunkt ausführen.",
+        text: "...best. Aufgaben zu 1 Zeitpunkt ausführen.",
         color: "#FA9806",
-        pic: "",
+        pic: "assets/clipart13.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Der Browser parst...",
         color: "#D4C3E2 ",
@@ -224,110 +246,121 @@ const cards: Card[] = [
         pic: "assets/clipart3.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
-        text: "LET- Variablen sind nur in dem Bereich gültig,...",
+        text: "LET-Variablen sind nur in dem Bereich gültig,...",
         color: "#01FFFF",
-        pic: "",
+        pic: "assets/clipart14.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "...in dem sie deklariert wurden.",
+        text: "...in dem sie deklariert wurden. ",
         color: "#01FFFF",
-        pic: "",
+        pic: "assets/clipart14.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
-        text: "Um Funktionen zu einem best. Zeitpunkt aufzurufen,...",
+        text: "Um Funktionen am best. Zeitpunkt aufzurufen,...",
         color: "#FFCCCC",
-        pic: "",
+        pic: "assets/clipart15.png",
         background: "assets/backgroundCard2.png"
     },
     {
         text: "...benutzen wir Events.",
         color: "#FFCCCC",
-        pic: "",
+        pic: "assets/clipart15.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
-        text: "Um einer Variable einen Wert zu zu weisen benötigen wir...",
+        text: "Um 1 Variable 1 Wert zu zu weisen benötigen wir...   ",
         color: "#2604FF",
-        pic: "",
+        pic: "assets/clipart17.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "...ein '=' , einen typ- entsprechenden Wert & ein ';'.",
+        text: "...1 '=' , 1 typ- entsprechenden Wert & 1 ';'. ",
         color: "#2604FF",
-        pic: "",
+        pic: "assets/clipart17.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
-        text: "Variablen, die LOKAL deklariert werden,...",
+        text: "Variablen, die LOKAL deklariert werden,..",
         color: "#1E8449",
         pic: "assets/clipart2.png",
         background: "assets/backgroundCard2.png"
     },
     {
-        text: "...sind nur innerhalb dieser Funktion verfügbar.",
+        text: "...sind innerhalb der Funktion verfügbar",
         color: "#1E8449",
         pic: "assets/clipart2.png",
         background: "assets/backgroundCard2.png"
     },
+
     {
         text: "Variablen, die GLOBAL deklariert werden,...",
         color: "#FF1100",
-        pic: "",
+        pic: "assets/clipart16.png",
         background: "assets/backgroundCard2.png"
     },
     {
         text: "...sind überall verfügbar.",
         color: "#FF1100",
-        pic: "",
+        pic: "assets/clipart16.png",
         background: "assets/backgroundCard2.png"
     }
+        
 
 
 ];
 console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.length);
 
 
+
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //QUELLE: youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
-function shuffleCardsEASY(cards): void {
-    for (let i: number = 8 - 1; i > 0; i--) {
-        const randomNumber: number = Math.floor(Math.random() * (i + 1)); //randomNumber spuckt uns eine random zahl aus unserem arrays raus
-        const temp: number = cards[i];
-        cards[i] = cards[randomNumber];
-        cards[randomNumber] = temp; //temp ist dafür da den ausgesuchten wert mit der randomnumber  zu swappen
+function shuffle<T>(x: T[]): T[] {
+
+
+    let index: number = x.length,
+        temp,
+        randomNumber;
+
+    while (index !== 0) {
+        randomNumber = Math.floor(Math.random() * (index + 1)); //randomNumber spuckt uns eine random zahl aus unserem arrays raus
+        temp = x[index];
+        x[index] = x[randomNumber];
+        x[randomNumber] = temp; //temp ist dafür da den ausgesuchten wert mit der randomnumber  zu swappen
         //i kann natürlich nicht kleiner als null sein, da es nur 8 karten hier gibt die zum shufflen da sind
-        //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array cards verwendet
-
+        //um zu verhindern, dass keine pärchen bei spielstärke EASY da sind, werden nur die ersten 8 Karten aus meinem Array cards verwenden
     }
-
+    return x;
 }
 
-function shuffleCardsAVERAGE(cards): void {
-    for (let i: number = 16 - 1; i > 0; i--) {
-        const randomNumber: number = Math.floor(Math.random() * (i + 1));
-        const temp: number = cards[i];
-        cards[i] = cards[randomNumber];
-        cards[randomNumber] = temp;
+function WhoIsTheWinner(): void {
+
+    if (yourScore > rivalScore) {
+        setTimeout(function (): void {
+
+            winner.style.visibility = "visible";
+            winner.innerHTML = "YOU WON !!!";
+            cheerSound.play();
+
+        },         2000);
+    }
+    else {
+        setTimeout(function (): void {
+
+            winner.style.visibility = "visible";
+            winner.innerHTML = "GAME OVER";
+            //cheerSound.play();
+
+        },         2000);
 
     }
-
 }
-
-function shuffleCardsHARD(cards): void {
-    for (let i: number = 32 - 1; i > 0; i--) {
-        const randomNumber: number = Math.floor(Math.random() * (i + 1));
-        const temp: number = cards[i];
-        cards[i] = cards[randomNumber];
-        cards[randomNumber] = temp;
-
-    }
-
-}
-
-
 
 
 window.addEventListener("load", function (): void {
@@ -379,7 +412,7 @@ window.addEventListener("load", function (): void {
 
         //nur wenn bei dem Objekt eine Bildquelle vorhanden ist, soll die Option eines Bildes erst da sein
         //sont hat jede karte (auch wenn kein Bild vorhanden ist) einen störenden leeren Rahmen
-        if (card.pic != "" && cardsnumber != 32) {
+        if (card.pic != "") {
             if (cardsnumber == 8) {
                 //erstelllen der Piktogramme
                 let picto: HTMLImageElement = document.createElement("img");
@@ -473,7 +506,7 @@ window.addEventListener("load", function (): void {
                         yourScoreDOMElement.innerHTML = "Your <p> score: </p>" + yourScore;
                         // Es soll überprüft werden ob die Karten nach dem Finden eines Matches auch wirklich us dem Array gelöscht werden 
                         console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
-                    },         2200);
+                    },         2000);
                 }
                 //Wenn es sich nicht um ein Pärchen handelt soll nach wenigen Augenblicken die Karte wieder zugedeckt
                 //werden, indem wir den style wieder auf visible verändern
@@ -486,16 +519,23 @@ window.addEventListener("load", function (): void {
                         selected = [];
                         console.log(" es sind wieder " + selected.length + " Karten selected");
 
+                        //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
+                        //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
+                        setTimeout(function (): void {
+                            console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
+                            rivalsTurn();
+                        },         1000);
 
-                    },         2200);
 
-                    //Wenn ich kein Match gefunden habe, soll wieder der rival nach einem timout dran sein 
-                    //So verdecken sich die KArten erst wieder, bevor der rival schon 2 aufdeckt 
-                    setTimeout(function (): void {
-                        console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
-                        rivalsTurn();
-                    },         3500);
+                    },         2000);
+
                 }
+            }
+            //wenn das array cardsonfield leer ist/ wenn keine Karten mehr auf dem Spielfeld liegen
+            //soll der Gewinner bekannt gegeben werden
+            if (cardsOnField.length == 0) {
+                WhoIsTheWinner();
+                console.log("we have a winner");
             }
         });
 
@@ -548,24 +588,32 @@ window.addEventListener("load", function (): void {
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
 
-                //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
-                rivalsTurn();
+                if (cardsOnField.length == 0) {
+                    WhoIsTheWinner();
+                    console.log("we have a winner");
+                }
 
-            },         3000);
+                //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
+                setTimeout(function (): void {
+                    rivalsTurn();
+                },         1000);
+
+
+            },         2000);
 
 
         }
         if (itsaMatch == false) {
 
-            
+
             setTimeout(function (): void {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
                 youCanClick = true;
-            },         3000);
+            },         2000);
 
         }
-        
+
     }
 
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
@@ -586,7 +634,7 @@ window.addEventListener("load", function (): void {
     document.getElementById("button1").addEventListener("click", function (): void {
 
         buttonBox.style.visibility = "hidden";
-        shuffleCardsEASY(cards);
+        //shuffleCardsEASY(cards);
         start(8);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
@@ -595,7 +643,7 @@ window.addEventListener("load", function (): void {
     document.getElementById("button2").addEventListener("click", function (): void {
 
         buttonBox.style.visibility = "hidden";
-        shuffleCardsAVERAGE(cards);
+        //shuffleCardsAVERAGE(cards);
         start(16);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
@@ -604,7 +652,7 @@ window.addEventListener("load", function (): void {
     document.getElementById("button3").addEventListener("click", function (): void {
 
         buttonBox.style.visibility = "hidden";
-        shuffleCardsHARD(cards);
+        //shuffleCardsHARD(cards);
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
