@@ -338,7 +338,7 @@ function WhoIsTheWinner(): void {
 
         },         2000);
     }
-    else {
+    if (rivalScore > yourScore) {
         setTimeout(function (): void {
 
             winner.style.visibility = "visible";

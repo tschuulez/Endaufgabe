@@ -262,7 +262,7 @@ function WhoIsTheWinner() {
             cheerSound.play();
         }, 2000);
     }
-    else {
+    if (rivalScore > yourScore) {
         setTimeout(function () {
             winner.style.visibility = "visible";
             winner.innerHTML = "GAME OVER";
