@@ -491,7 +491,7 @@ window.addEventListener("load", function () {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
                 youCanClick = true;
-                yourScoreDOMElement.style.color = "yellow";
+                yourScoreDOMElement.style.color = "orange";
                 yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
                 rivalScoreDOMElement.style.color = "white";
             }, 3000);
