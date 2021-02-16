@@ -45,12 +45,9 @@ window.addEventListener("load", function (): void {
 
 //Funktion um wieder auf die Startseite zu gelanden - 3 Buttons/ 3 Spielstärken erscheinden wieder 
 //quick & dirty , aber so kann man erneut spielen 
-function playAgain(): void {
-    location.reload();
-}
 
 document.querySelector(".fa-redo").addEventListener("click", function (): void {
-    playAgain();
+    location.reload();
 });
 
 //Deklaration vieler Arrays , Variablen , Objekten 
@@ -73,6 +70,7 @@ let gameOverSound: HTMLAudioElement = new Audio ("../assets/gameOver.wav");
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 let selected: SelectedCard[] = [];
+let mixedArray: any [] = [];
 
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 let itsaMatch: boolean;
@@ -322,9 +320,17 @@ console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.len
 
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //QUELLE: youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
-function shuffle(x: number[]): number[] {
+function shuffle(allTheCards: number[]): number[] {
+    let randomNumber: number;
+    let temporary: number;
+    for (let i: number = allTheCards.length - 1; i > 0; i-- ) {
+        randomNumber = Math.floor(Math.random() * (i + 1));   // randomNUmber sucht uns einen random Wert aus unserem Array
+        temporary = allTheCards[i];    // und temporay hat die Funktion die die Stellen zu swappen
+        allTheCards[i] = allTheCards[randomNumber];
+        allTheCards[randomNumber] = temporary;
 
-    return x; 
+    }
+    return allTheCards; 
 }
 
 function WhoIsTheWinner(): void {
@@ -626,7 +632,7 @@ window.addEventListener("load", function (): void {
                 yourScoreDOMElement.style.color = "yellow";
                 yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
                 rivalScoreDOMElement.style.color = "white";
-            },         2500);
+            },         3000);
 
         }
 
@@ -635,10 +641,74 @@ window.addEventListener("load", function (): void {
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
     //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
     function start(numberOfCards: number): void {
-        for (var i: number = 0; i < numberOfCards; i++)
-            CreateGAME(cards[i], numberOfCards);
+       
 
+        let allTheIndices: number [] = [];
+        for (let i: number = 0; i < cards.length / 2; i ++) {
+            //jeweils eine Karte jeden Paares ist in diesem Array dann drin
+            allTheIndices.push(i);
+        }
+        //diese werden mit der Funktion shuffle durch gemischelt
+        shuffle(allTheIndices);
 
+        //Wenn 8 Karten auf dem Spielfeld sind
+        if (numberOfCards == 8) {
+            //sollen IMMER 4 Pärchen da sein
+            const availablePairs: number = 4;
+            for (let i: number = 0; i < availablePairs; i++ ) {
+                let index: number = allTheIndices[i] * 2; //um die jeweiligen Gegenkarten hinzuzufügen
+                let oneCard: any = cards[index];
+                let otherCard: any = cards[index + 1];
+
+                mixedArray.push(oneCard);
+                mixedArray.push(otherCard);
+            }
+
+            shuffle(mixedArray);
+
+            for (var i: number = 0; i < numberOfCards; i++) {
+                CreateGAME(mixedArray[i], numberOfCards);
+            }
+        }
+        //Wenn 16 Karten auf dem Spielfeld sind
+        if (numberOfCards == 16) {
+            //sollen IMMER 8 Pärchen da sein
+            const availablePairs: number = 8;
+            for (let i: number = 0; i < availablePairs; i++ ) {
+                let index: number = allTheIndices[i] * 2; //um die jeweiligen Gegenkarten hinzuzufügen
+                let oneCard: any = cards[index];
+                let otherCard: any = cards[index + 1];
+
+                mixedArray.push(oneCard);
+                mixedArray.push(otherCard);
+            }
+
+            shuffle(mixedArray);
+
+            for (var i: number = 0; i < numberOfCards; i++) {
+                CreateGAME(mixedArray[i], numberOfCards);
+            }
+
+        }
+        //Wenn 32 Karten auf dem Spielfeld sind
+        if (numberOfCards == 32) {
+            //sollen IMMER 16 Pärchen da sein
+            const availablePairs: number = 16;
+            for (let i: number = 0; i < availablePairs; i++ ) {
+                let index: number = allTheIndices[i] * 2; //um die jeweiligen Gegenkarten hinzuzufügen
+                let oneCard: any = cards[index];
+                let otherCard: any = cards[index + 1];
+
+                mixedArray.push(oneCard);
+                mixedArray.push(otherCard);
+            }
+
+            shuffle(mixedArray);
+
+            for (var i: number = 0; i < numberOfCards; i++) {
+                CreateGAME(mixedArray[i], numberOfCards);
+            }
+        }
     }
 
     function checkForMatch(firstCard: SelectedCard, secondCard: SelectedCard): boolean {
