@@ -140,6 +140,7 @@
 }
 
 
+
 body {
     background-image: url("../assets/BoardBackground.jpeg");
     font-family: 'Courier New', Courier, monospace;
@@ -242,6 +243,19 @@ footer{
 .texto{
     position: relative;
     font-size: 15px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    align-self: center;
+    
+    z-index: 0;
+    
+}
+.textoHARD{
+    position: relative;
+    top: 20%;
+    font-size: 15px;
+
     font-weight: bold;
     color: #000000;
     text-align: center;

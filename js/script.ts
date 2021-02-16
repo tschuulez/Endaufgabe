@@ -409,17 +409,25 @@ window.addEventListener("load", function (): void {
         //Dem divElement wird die property Farbe zugewiesen  
         card1.style.background = card.color;
 
-        if (cardsnumber == 16 || cardsnumber == 32) {
-            //erstellen eines Textes nur bei 16 und 32 karten , die zwei geraden striche bedeuten "oder" = vergleichsoperator
+        if (cardsnumber == 16 ) {
+            //erstellen eines Textes nur bei 16 und 32 karten 
             let texto: HTMLLabelElement = document.createElement("label");
             texto.className = "texto";
             texto.innerHTML = card.text;
             card1.appendChild(texto);
         }
+        if (cardsnumber == 32) {
+            //erstellen eines Textes nur bei 16 und 32 karten 
+            let texto: HTMLLabelElement = document.createElement("label");
+            texto.className = "textoHARD";
+            texto.innerHTML = card.text;
+            card1.appendChild(texto);
+
+        }
 
         //nur wenn bei dem Objekt eine Bildquelle vorhanden ist, soll die Option eines Bildes erst da sein
         //sont hat jede karte (auch wenn kein Bild vorhanden ist) einen störenden leeren Rahmen
-        if (card.pic != "") {
+        if (card.pic != "" && cardsnumber != 32) {
             if (cardsnumber == 8) {
                 //erstelllen der Piktogramme
                 let picto: HTMLImageElement = document.createElement("img");
