@@ -535,8 +535,8 @@ window.addEventListener("load", function () {
                 mixedArray.push(otherCard);
             }
             shuffle(mixedArray);
-            for (var i = 0; i < numberOfCards; i++) {
-                CreateGAME(mixedArray[i], numberOfCards);
+            for (var i2 = 0; i2 < numberOfCards; i2++) {
+                CreateGAME(mixedArray[i2], numberOfCards);
             }
         }
         //Wenn 32 Karten auf dem Spielfeld sind
@@ -551,8 +551,8 @@ window.addEventListener("load", function () {
                 mixedArray.push(otherCard);
             }
             shuffle(mixedArray);
-            for (var i = 0; i < numberOfCards; i++) {
-                CreateGAME(mixedArray[i], numberOfCards);
+            for (var i3 = 0; i3 < numberOfCards; i3++) {
+                CreateGAME(mixedArray[i3], numberOfCards);
             }
         }
     }

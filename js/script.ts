@@ -693,8 +693,8 @@ window.addEventListener("load", function (): void {
 
             shuffle(mixedArray);
 
-            for (var i: number = 0; i < numberOfCards; i++) {
-                CreateGAME(mixedArray[i], numberOfCards);
+            for (var i2: number = 0; i2 < numberOfCards; i2++) {
+                CreateGAME(mixedArray[i2], numberOfCards);
             }
 
         }
@@ -713,8 +713,8 @@ window.addEventListener("load", function (): void {
 
             shuffle(mixedArray);
 
-            for (var i: number = 0; i < numberOfCards; i++) {
-                CreateGAME(mixedArray[i], numberOfCards);
+            for (var i3: number = 0; i3 < numberOfCards; i3++) {
+                CreateGAME(mixedArray[i3], numberOfCards);
             }
         }
     }
