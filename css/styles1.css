@@ -153,6 +153,17 @@ h1{
     color: #FFFF;
     text-align: center;
 }
+
+#winner {
+    position: relative;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
+    color: transparent;
+    font-size: 100px;
+    top: 30% ;
+    left: 0%;
+}
 h2{
     font-family: 'Courier New', Courier, monospace;
     font-size: 20px;
@@ -265,16 +276,7 @@ footer{
     
 }
 
-#winner {
-    position: absolute;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
-    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
-    color: transparent;
-    font-size: 100px;
-    top: 30% ;
-    left: 30%;
-}
+
 
 
 

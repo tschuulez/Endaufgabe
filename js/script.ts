@@ -347,7 +347,7 @@ function WhoIsTheWinner(): void {
 
         },         2000);
     }
-    if (rivalScore > yourScore) {
+    if (yourScore < rivalScore) {
         setTimeout(function (): void {
 
             winner.style.visibility = "visible";
@@ -569,6 +569,8 @@ window.addEventListener("load", function (): void {
 
         
 
+        
+
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
         let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
@@ -611,6 +613,11 @@ window.addEventListener("load", function (): void {
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
 
+                if (cardsOnField.length == 0) {
+                    WhoIsTheWinner();
+                    //console.log("we have a winner");
+                }
+
                 
 
                 //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
@@ -619,10 +626,7 @@ window.addEventListener("load", function (): void {
                 },         1000);
 
 
-                if (cardsOnField.length == 0) {
-                    WhoIsTheWinner();
-                    console.log("we have a winner");
-                }
+                
 
 
             },         2500);

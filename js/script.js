@@ -270,7 +270,7 @@ function WhoIsTheWinner() {
             cheerSound.play();
         }, 2000);
     }
-    if (rivalScore > yourScore) {
+    if (yourScore < rivalScore) {
         setTimeout(function () {
             winner.style.visibility = "visible";
             winner.innerHTML = "GAME OVER";
@@ -476,14 +476,14 @@ window.addEventListener("load", function () {
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
+                if (cardsOnField.length == 0) {
+                    WhoIsTheWinner();
+                    //console.log("we have a winner");
+                }
                 //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
                 setTimeout(function () {
                     rivalsTurn();
                 }, 1000);
-                if (cardsOnField.length == 0) {
-                    WhoIsTheWinner();
-                    console.log("we have a winner");
-                }
             }, 2500);
         }
         if (itsaMatch == false) {
