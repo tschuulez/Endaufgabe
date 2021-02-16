@@ -334,6 +334,9 @@ function WhoIsTheWinner(): void {
 
             winner.style.visibility = "visible";
             winner.innerHTML = "YOU WON !!!";
+            yourScoreDOMElement.style.color = "magenta";
+            yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
+
             cheerSound.play();
 
         },         2000);
@@ -343,6 +346,16 @@ function WhoIsTheWinner(): void {
 
             winner.style.visibility = "visible";
             winner.innerHTML = "GAME OVER";
+            gameOverSound.play();
+
+        },         2000);
+
+    }
+    if (rivalScore == yourScore) {
+        setTimeout(function (): void {
+
+            winner.style.visibility = "visible";
+            winner.innerHTML = "IT ENDED IN A TIE...";
             gameOverSound.play();
 
         },         2000);
@@ -496,7 +509,7 @@ window.addEventListener("load", function (): void {
                         console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
 
                         //wenn das array cardsonfield leer ist/ wenn keine Karten mehr auf dem Spielfeld liegen
-            //soll der Gewinner bekannt gegeben werden
+                        //soll der Gewinner bekannt gegeben werden
                         if (cardsOnField.length == 0) {
                         WhoIsTheWinner();
                         console.log("we have a winner");
@@ -536,6 +549,12 @@ window.addEventListener("load", function (): void {
 
         youCanClick = false;
 
+        yourScoreDOMElement.style.color = "white";
+        rivalScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
+        rivalScoreDOMElement.style.color = "blue";
+
+        
+
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
         let pickedCard1: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         let pickedCard2: SelectedCard = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
@@ -549,12 +568,12 @@ window.addEventListener("load", function (): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard1.reverse.style.visibility = "hidden";
 
-        },         1600);
+        },         1500);
         setTimeout(function (): void {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard2.reverse.style.visibility = "hidden";
 
-        },         500);
+        },         1000);
 
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
         let itsaMatch: boolean = checkForMatch(pickedCard1, pickedCard2);
@@ -578,10 +597,7 @@ window.addEventListener("load", function (): void {
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
 
-                if (cardsOnField.length == 0) {
-                    WhoIsTheWinner();
-                    console.log("we have a winner");
-                }
+                
 
                 //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
                 setTimeout(function (): void {
@@ -589,7 +605,13 @@ window.addEventListener("load", function (): void {
                 },         1000);
 
 
-            },         2000);
+                if (cardsOnField.length == 0) {
+                    WhoIsTheWinner();
+                    console.log("we have a winner");
+                }
+
+
+            },         2500);
 
 
         }
@@ -600,7 +622,11 @@ window.addEventListener("load", function (): void {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
                 youCanClick = true;
-            },         2000);
+
+                yourScoreDOMElement.style.color = "yellow";
+                yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
+                rivalScoreDOMElement.style.color = "white";
+            },         2500);
 
         }
 
@@ -617,7 +643,7 @@ window.addEventListener("load", function (): void {
 
     function checkForMatch(firstCard: SelectedCard, secondCard: SelectedCard): boolean {
         //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
-        return firstCard.properties.color === secondCard.properties.color;
+        return firstCard.properties.pic === secondCard.properties.pic;
     }
     //Eventlistener für jeden Button EASY AVERAGE HARD, Button sollen verschwinden UND CreateGAME funktion wird ausgeführt
     //es wird übergeben wie viele karten erzeugt werden sollen und das Array wird bei jedem Klick neu geshufflet

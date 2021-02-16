@@ -259,6 +259,8 @@ function WhoIsTheWinner() {
         setTimeout(function () {
             winner.style.visibility = "visible";
             winner.innerHTML = "YOU WON !!!";
+            yourScoreDOMElement.style.color = "magenta";
+            yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
             cheerSound.play();
         }, 2000);
     }
@@ -266,6 +268,13 @@ function WhoIsTheWinner() {
         setTimeout(function () {
             winner.style.visibility = "visible";
             winner.innerHTML = "GAME OVER";
+            gameOverSound.play();
+        }, 2000);
+    }
+    if (rivalScore == yourScore) {
+        setTimeout(function () {
+            winner.style.visibility = "visible";
+            winner.innerHTML = "IT ENDED IN A TIE...";
             gameOverSound.play();
         }, 2000);
     }
@@ -418,6 +427,9 @@ window.addEventListener("load", function () {
     }
     function rivalsTurn() {
         youCanClick = false;
+        yourScoreDOMElement.style.color = "white";
+        rivalScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
+        rivalScoreDOMElement.style.color = "blue";
         //es werden zwei karten aus dem array cardsOnField gezogen, die dann aufgedeckt werden sollen 
         var pickedCard1 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
         var pickedCard2 = cardsOnField[Math.floor(Math.random() * (cardsOnField.length))];
@@ -429,11 +441,11 @@ window.addEventListener("load", function () {
         setTimeout(function () {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard1.reverse.style.visibility = "hidden";
-        }, 1600);
+        }, 1500);
         setTimeout(function () {
             //es sollen nicht beide karten gleichzeitig aufgedeckt werden
             pickedCard2.reverse.style.visibility = "hidden";
-        }, 500);
+        }, 1000);
         //die beiden Karten werden wieder mit der Funktion checkforMatch verglichen
         var itsaMatch = checkForMatch(pickedCard1, pickedCard2);
         //Je nach dem, ob es sich um ein Pärchen handelt soll der rivalScore dementsprechend angepasst werden
@@ -451,22 +463,25 @@ window.addEventListener("load", function () {
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
-                if (cardsOnField.length == 0) {
-                    WhoIsTheWinner();
-                    console.log("we have a winner");
-                }
                 //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
                 setTimeout(function () {
                     rivalsTurn();
                 }, 1000);
-            }, 2000);
+                if (cardsOnField.length == 0) {
+                    WhoIsTheWinner();
+                    console.log("we have a winner");
+                }
+            }, 2500);
         }
         if (itsaMatch == false) {
             setTimeout(function () {
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
                 youCanClick = true;
-            }, 2000);
+                yourScoreDOMElement.style.color = "yellow";
+                yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
+                rivalScoreDOMElement.style.color = "white";
+            }, 2500);
         }
     }
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
@@ -477,7 +492,7 @@ window.addEventListener("load", function () {
     }
     function checkForMatch(firstCard, secondCard) {
         //anhand der Farbe wird hier verglichen, ob es sich um ein Match handelt. Dementsprechend wird der boolean angepasst
-        return firstCard.properties.color === secondCard.properties.color;
+        return firstCard.properties.pic === secondCard.properties.pic;
     }
     //Eventlistener für jeden Button EASY AVERAGE HARD, Button sollen verschwinden UND CreateGAME funktion wird ausgeführt
     //es wird übergeben wie viele karten erzeugt werden sollen und das Array wird bei jedem Klick neu geshufflet
