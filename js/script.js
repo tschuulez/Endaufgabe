@@ -38,19 +38,22 @@ var winner = document.createElement("h1");
 winner.id = "winner";
 document.body.appendChild(winner);
 winner.style.visibility = "hidden";
+//Variablen der ganzen Sounds, die später abgespielt werden mit .play()
 var cheerSound = new Audio("../assets/cheerSound.mp3");
 var matchSound = new Audio("../assets/itsaMatch.mp3");
 var gameOverSound = new Audio("../assets/gameOver.wav");
-//Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
-//umgedreht zu werden, sofern sie nicht übereinstimmen
+//Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden,
+//es beifnden sich so maximal 2 Karten in diesem Array 
 var selected = [];
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 var itsaMatch;
+//boolean- nur wenn dieser true ist kann der User karten aufdecken / anlicken - sonst nicht
 var youCanClick;
 //Die karten die erzeugt werden bei der jeweiligen Spielstärke werden wiederum in ein Array gepusht 
 //SO kann der Computer nur Karten randomly aussuchen, die sich auch wirklich auf dem Spielfeld befinden 
 var cardsOnField = [];
 //Hier sind alle 32 Karten gespeichert, mit ihren einzelnen Merkmalen 
+//ACHTUNG es folgen viiiiiiele Zeilen 
 var cards = [
     {
         text: "DOM- Manipulation bezeichnet...",
@@ -248,6 +251,7 @@ var cards = [
 console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.length);
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //QUELLE: youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
+//Die Typisierung T [] hier erlaubt uns Arrays des Typs number []  und des Typs Card[] zu shufflen
 function shuffle(allTheCards) {
     for (var i = allTheCards.length - 1; i > 0; i--) {
         var randomNumber = Math.floor(Math.random() * (i + 1)); // randomNUmber sucht uns einen random Wert aus unserem Array
@@ -257,7 +261,9 @@ function shuffle(allTheCards) {
     }
     return allTheCards;
 }
+//diese Funktion wird ausgeführt sobald das Array CArdsOnField leer ist, sprich wenn keine Karten mehr auf der Spielfäche liegen
 function WhoIsTheWinner() {
+    //das wird angezeigt falls der computer gewinnt
     if (yourScore < rivalScore) {
         setTimeout(function () {
             console.log("game over");
@@ -268,6 +274,7 @@ function WhoIsTheWinner() {
             yourScoreDOMElement.style.visibility = "hidden";
         }, 2000);
     }
+    //das hier wird ausgeführt wenn der Spieler /User gewinnt
     if (yourScore > rivalScore) {
         setTimeout(function () {
             winner.style.visibility = "visible";
@@ -277,6 +284,7 @@ function WhoIsTheWinner() {
             cheerSound.play();
         }, 2000);
     }
+    //Und das hier bei dem Fall: Unentschieden 
     if (rivalScore == yourScore) {
         setTimeout(function () {
             winner.style.visibility = "visible";
@@ -374,6 +382,8 @@ window.addEventListener("load", function () {
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
         card1.addEventListener("click", function () {
+            //sollte dieser boolean false sein wird mit return der rest des Codes innerhalb der klammern nicht berücksichtigt 
+            //so kann der user nicht klicken und keine Karten aufdecken 
             if (youCanClick == false) {
                 return;
             }
@@ -399,6 +409,7 @@ window.addEventListener("load", function () {
                         selected[0].uncovered.style.visibility = "hidden";
                         selected[1].uncovered.style.visibility = "hidden";
                         youCanClick = true;
+                        //ein matchsound ertönt
                         matchSound.play();
                         //die zusammmen gehörigen Karten werden aus dem Array CardsOnField rausgeschnitten, dass der rival diese
                         //nicht mehr zufällig aussuchen kann
@@ -440,8 +451,11 @@ window.addEventListener("load", function () {
             }
         });
     }
+    //funltion des imagnären gegners 
     function rivalsTurn() {
+        //sobald der rival dran ist soll der user keine Karten aufdecken können 
         youCanClick = false;
+        //die farben der scores ändern sich so, damit der user sehen kann wer im moment dran ist
         yourScoreDOMElement.style.color = "white";
         rivalScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
         rivalScoreDOMElement.style.color = "blue";
@@ -478,6 +492,9 @@ window.addEventListener("load", function () {
                 rivalScore++;
                 rivalScoreDOMElement.innerHTML = "Rival's <p> score: </p>" + rivalScore;
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
+                //hier ist der return wichtig, damit der rest des codes nicht berücksichtigt wird. SOnst wird die rivalsTurn function
+                //nochmals aufgerufen und der browser hängt sich durch die obige while Schleife auf, da beide pickedcards 0 entsprechen 
+                //-> es kommt zu einer endlos schleife
                 if (cardsOnField.length == 0) {
                     WhoIsTheWinner();
                     console.log("we have a winner");
@@ -491,9 +508,11 @@ window.addEventListener("load", function () {
         }
         if (itsaMatch == false) {
             setTimeout(function () {
+                //Bei keinem match drehen sich die karten wieder um und der user kann wieder maximal 2 karten aufdecken 
                 pickedCard1.reverse.style.visibility = "visible";
                 pickedCard2.reverse.style.visibility = "visible";
                 youCanClick = true;
+                //die farbe der scores wird wieder angepasst 
                 yourScoreDOMElement.style.color = "orange";
                 yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
                 rivalScoreDOMElement.style.color = "white";
@@ -503,6 +522,8 @@ window.addEventListener("load", function () {
     //Funktion Start soll nach dem Auswählen einer Spielstärke ausgeführt werden, mit der Forschleife und dessen Zählervariable
     //wird später festgelegt wie viele divs mit den jeweiligen Attributen erzeugt werden sollen
     function start(numberOfCards) {
+        //DIe hälfte aller karten werden hier rein gepusht- Spich jeweils nur ein Partner befindet sich hier drin/ diese werden 
+        //dann mit der shuffle funktion vermischt
         var allTheIndices = [];
         for (var i_1 = 0; i_1 < cards.length / 2; i_1++) {
             //jeweils eine Karte jeden Paares ist in diesem Array dann drin
@@ -510,6 +531,7 @@ window.addEventListener("load", function () {
         }
         //diese werden mit der Funktion shuffle durch gemischelt
         shuffle(allTheIndices);
+        //hier sind dann die Paare später drin die nach auswählen der spielstärke gezeigt werden
         var mixedArray = [];
         //Wenn 8 Karten auf dem Spielfeld sind
         if (numberOfCards == 8) {
@@ -521,6 +543,7 @@ window.addEventListener("load", function () {
                 var otherCard = cards[index + 1];
                 mixedArray.push(oneCard);
                 mixedArray.push(otherCard);
+                //somit befinden sich PAARE in dem Array und nicht einfach nur 8 random karten von 32
             }
             shuffle(mixedArray);
             for (var i = 0; i < numberOfCards; i++) {
@@ -568,21 +591,18 @@ window.addEventListener("load", function () {
     //es wird übergeben wie viele karten erzeugt werden sollen und das Array wird bei jedem Klick neu geshufflet
     document.getElementById("button1").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
-        //shuffleCardsEASY(cards);
         start(8);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
     });
     document.getElementById("button2").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
-        //shuffleCardsAVERAGE(cards);
         start(16);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
     });
     document.getElementById("button3").addEventListener("click", function () {
         buttonBox.style.visibility = "hidden";
-        //shuffleCardsHARD(cards);
         start(32);
         console.log("So viele Karten wurden hinzugefügt " + cardsOnField.length);
         rivalsTurn();
