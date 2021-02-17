@@ -70,7 +70,7 @@ let gameOverSound: HTMLAudioElement = new Audio ("../assets/gameOver.wav");
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 let selected: SelectedCard[] = [];
-let mixedArray: any [] = [];
+
 
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 let itsaMatch: boolean;
@@ -320,12 +320,11 @@ console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.len
 
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //QUELLE: youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
-function shuffle(allTheCards: number[]): number[] {
-    let randomNumber: number;
-    let temporary: number;
+function shuffle<T>(allTheCards: T[]): T[] {
+    
     for (let i: number = allTheCards.length - 1; i > 0; i-- ) {
-        randomNumber = Math.floor(Math.random() * (i + 1));   // randomNUmber sucht uns einen random Wert aus unserem Array
-        temporary = allTheCards[i];    // und temporay hat die Funktion die die Stellen zu swappen
+        let randomNumber: number = Math.floor(Math.random() * (i + 1));   // randomNUmber sucht uns einen random Wert aus unserem Array
+        let temporary: T = allTheCards[i];    // und temporay hat die Funktion die die Stellen zu swappen
         allTheCards[i] = allTheCards[randomNumber];
         allTheCards[randomNumber] = temporary;
 
@@ -334,28 +333,30 @@ function shuffle(allTheCards: number[]): number[] {
 }
 
 function WhoIsTheWinner(): void {
+    if (yourScore < rivalScore) {
+        setTimeout(function (): void {
+            console.log("game over");
+            winner.style.visibility = "visible";
+            winner.innerHTML = "GAME OVER";
+            gameOverSound.play();
+            rivalScoreDOMElement.style.visibility = "hidden";
+            yourScoreDOMElement.style.visibility = "hidden";
 
+        },         2000);
+
+    }
     if (yourScore > rivalScore) {
         setTimeout(function (): void {
 
             winner.style.visibility = "visible";
             winner.innerHTML = "YOU WON !!!";
-            yourScoreDOMElement.style.color = "magenta";
-            yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
+            
+            rivalScoreDOMElement.style.visibility = "hidden";
+            yourScoreDOMElement.style.visibility = "hidden";
 
             cheerSound.play();
 
         },         2000);
-    }
-    if (yourScore < rivalScore) {
-        setTimeout(function (): void {
-
-            winner.style.visibility = "visible";
-            winner.innerHTML = "GAME OVER";
-            gameOverSound.play();
-
-        },         2000);
-
     }
     if (rivalScore == yourScore) {
         setTimeout(function (): void {
@@ -363,10 +364,14 @@ function WhoIsTheWinner(): void {
             winner.style.visibility = "visible";
             winner.innerHTML = "IT ENDED IN A TIE...";
             gameOverSound.play();
+            rivalScoreDOMElement.style.visibility = "hidden";
+            yourScoreDOMElement.style.visibility = "hidden";
 
         },         2000);
 
     }
+    
+    
 }
 
 
@@ -615,7 +620,8 @@ window.addEventListener("load", function (): void {
 
                 if (cardsOnField.length == 0) {
                     WhoIsTheWinner();
-                    //console.log("we have a winner");
+                    console.log("we have a winner");
+                    return;
                 }
 
                 
@@ -663,14 +669,16 @@ window.addEventListener("load", function (): void {
         //diese werden mit der Funktion shuffle durch gemischelt
         shuffle(allTheIndices);
 
+        let mixedArray: Card [] = [];
+
         //Wenn 8 Karten auf dem Spielfeld sind
         if (numberOfCards == 8) {
             //sollen IMMER 4 Pärchen da sein
             const availablePairs: number = 4;
             for (let i: number = 0; i < availablePairs; i++ ) {
                 let index: number = allTheIndices[i] * 2; //um die jeweiligen Gegenkarten hinzuzufügen
-                let oneCard: any = cards[index];
-                let otherCard: any = cards[index + 1];
+                let oneCard: Card = cards[index];
+                let otherCard: Card = cards[index + 1];
 
                 mixedArray.push(oneCard);
                 mixedArray.push(otherCard);
@@ -688,8 +696,8 @@ window.addEventListener("load", function (): void {
             const availablePairs: number = 8;
             for (let i: number = 0; i < availablePairs; i++ ) {
                 let index: number = allTheIndices[i] * 2; //um die jeweiligen Gegenkarten hinzuzufügen
-                let oneCard: any = cards[index];
-                let otherCard: any = cards[index + 1];
+                let oneCard: Card = cards[index];
+                let otherCard: Card = cards[index + 1];
 
                 mixedArray.push(oneCard);
                 mixedArray.push(otherCard);
@@ -708,8 +716,8 @@ window.addEventListener("load", function (): void {
             const availablePairs: number = 16;
             for (let i: number = 0; i < availablePairs; i++ ) {
                 let index: number = allTheIndices[i] * 2; //um die jeweiligen Gegenkarten hinzuzufügen
-                let oneCard: any = cards[index];
-                let otherCard: any = cards[index + 1];
+                let oneCard: Card = cards[index];
+                let otherCard: Card = cards[index + 1];
 
                 mixedArray.push(oneCard);
                 mixedArray.push(otherCard);

@@ -44,7 +44,6 @@ var gameOverSound = new Audio("../assets/gameOver.wav");
 //Hier werden die zwei geklickten karten rein gepusht, die nach paar sekunden wieder gelöscht werden, um 
 //umgedreht zu werden, sofern sie nicht übereinstimmen
 var selected = [];
-var mixedArray = [];
 //boolean, der bei der Funktion checkForMatch bei einem Match auf true gesetzt wird
 var itsaMatch;
 var youCanClick;
@@ -250,31 +249,32 @@ console.log("im Moment sind so viele Karten in deinem Array " + cardsOnField.len
 // Array cards wild durchmischeln / hier wird ein fisher yates algorithmus verwendet, damit sich keine Reihenfolge wiederholt
 //QUELLE: youtube video: https://www.youtube.com/watch?v=5sNGqsMpW1E 
 function shuffle(allTheCards) {
-    var randomNumber;
-    var temporary;
     for (var i = allTheCards.length - 1; i > 0; i--) {
-        randomNumber = Math.floor(Math.random() * (i + 1)); // randomNUmber sucht uns einen random Wert aus unserem Array
-        temporary = allTheCards[i]; // und temporay hat die Funktion die die Stellen zu swappen
+        var randomNumber = Math.floor(Math.random() * (i + 1)); // randomNUmber sucht uns einen random Wert aus unserem Array
+        var temporary = allTheCards[i]; // und temporay hat die Funktion die die Stellen zu swappen
         allTheCards[i] = allTheCards[randomNumber];
         allTheCards[randomNumber] = temporary;
     }
     return allTheCards;
 }
 function WhoIsTheWinner() {
+    if (yourScore < rivalScore) {
+        setTimeout(function () {
+            console.log("game over");
+            winner.style.visibility = "visible";
+            winner.innerHTML = "GAME OVER";
+            gameOverSound.play();
+            rivalScoreDOMElement.style.visibility = "hidden";
+            yourScoreDOMElement.style.visibility = "hidden";
+        }, 2000);
+    }
     if (yourScore > rivalScore) {
         setTimeout(function () {
             winner.style.visibility = "visible";
             winner.innerHTML = "YOU WON !!!";
-            yourScoreDOMElement.style.color = "magenta";
-            yourScoreDOMElement.style.textShadow = "1px 3px 5px #c9c9c9";
+            rivalScoreDOMElement.style.visibility = "hidden";
+            yourScoreDOMElement.style.visibility = "hidden";
             cheerSound.play();
-        }, 2000);
-    }
-    if (yourScore < rivalScore) {
-        setTimeout(function () {
-            winner.style.visibility = "visible";
-            winner.innerHTML = "GAME OVER";
-            gameOverSound.play();
         }, 2000);
     }
     if (rivalScore == yourScore) {
@@ -282,6 +282,8 @@ function WhoIsTheWinner() {
             winner.style.visibility = "visible";
             winner.innerHTML = "IT ENDED IN A TIE...";
             gameOverSound.play();
+            rivalScoreDOMElement.style.visibility = "hidden";
+            yourScoreDOMElement.style.visibility = "hidden";
         }, 2000);
     }
 }
@@ -478,7 +480,8 @@ window.addEventListener("load", function () {
                 console.log(cardsOnField.length + " Karten sind noch auf dem Spielfeld");
                 if (cardsOnField.length == 0) {
                     WhoIsTheWinner();
-                    //console.log("we have a winner");
+                    console.log("we have a winner");
+                    return;
                 }
                 //Wenn es sich um ein Pärchen gehandelt hat, soll nochmal die Funktion rivalsTurn aufgerufen werden 
                 setTimeout(function () {
@@ -507,6 +510,7 @@ window.addEventListener("load", function () {
         }
         //diese werden mit der Funktion shuffle durch gemischelt
         shuffle(allTheIndices);
+        var mixedArray = [];
         //Wenn 8 Karten auf dem Spielfeld sind
         if (numberOfCards == 8) {
             //sollen IMMER 4 Pärchen da sein

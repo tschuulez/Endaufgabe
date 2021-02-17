@@ -30,6 +30,7 @@
     color: #FFFF;
     font-size: 30px;
     font-weight: bold;
+    z-index: 100;
 }
 
 
@@ -163,6 +164,7 @@ h1{
     font-size: 100px;
     top: 30% ;
     left: 0%;
+    z-index: 100;
 }
 h2{
     font-family: 'Courier New', Courier, monospace;
