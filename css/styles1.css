@@ -159,12 +159,29 @@ h1{
     position: relative;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 900;
-    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
-    color: transparent;
+    
     font-size: 100px;
-    top: 30% ;
+    top: 37% ;
     left: 0%;
     z-index: 100;
+
+    margin-top: 0px;
+    margin-bottom: 50px;
+    text-align: center;
+    
+  
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: -4px 4px #ef3550,
+                 -8px 8px #f48fb1,
+                 -12px 12px #7e57c2,
+                 -16px 16px #2196f3,
+                 -20px 20px #26c6da,
+                 -24px 24px #43a047,
+                 -28px 28px #eeff41,
+                 -32px 32px #f9a825,
+                 -36px 36px #ff5722;
 }
 h2{
     font-family: 'Courier New', Courier, monospace;
