@@ -1,4 +1,3 @@
-
 let buttons: HTMLDivElement[] = [];
 
 let buttonBox: HTMLElement = document.getElementById("buttonBox");
@@ -94,8 +93,6 @@ interface SelectedCard {
     uncovered: HTMLElement;
     properties: Card;
 }
-
-
 
 //Die karten die erzeugt werden bei der jeweiligen Spielstärke werden wiederum in ein Array gepusht 
 //SO kann der Computer nur Karten randomly aussuchen, die sich auch wirklich auf dem Spielfeld befinden 
@@ -475,11 +472,13 @@ window.addEventListener("load", function (): void {
 
         //Je nach Spielstärke werden so und so viele Karten in das Array cardsOnField gepusht
         //So kann der computer randomly davon 2 karten aufdecken, die auch wirklich auf dem Spielfeld sind
-        cardsOnField.push({
+        let newCard: SelectedCard = {
+            
             reverse: background,
             uncovered: card1,
             properties: card
-        });
+        };
+        cardsOnField.push(newCard);
 
         //Jede card1 / also jede erzeugte Karte soll klickbar sein, also füge ich den eventlistener direkt hier ein an meine 
         //Variable card1, die in diesem Codeblock deklariert und auffindbar ist 
@@ -493,11 +492,7 @@ window.addEventListener("load", function (): void {
             //Anweisungen, um die karten zu flippen 
             background.style.visibility = "hidden";
             //Die karte, die geklickt wurde, kommt in den Array selected 
-            selected.push({
-                reverse: background,
-                uncovered: card1,
-                properties: card
-            });
+            selected.push(newCard);
             console.log(selected.length);
 
             //sobald 2 karten aufgedeckt worden sind, soll verglichen werden, es sollen nicht mehr als 2 Karten aufdeckbar sein 
